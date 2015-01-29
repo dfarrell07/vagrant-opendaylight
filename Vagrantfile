@@ -12,6 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm"
   config.vm.provision "shell", inline: "yum install -y puppet"
 
+  # Install sshpass, used by connect.sh helper script
+  config.vm.provision "shell", inline: "rpm -ivh ftp://ftp.muug.mb.ca/mirror/fedora/epel/7/x86_64/s/sshpass-1.05-5.el7.x86_64.rpm"
+
   # Install OpenDaylight using its Puppet module
   config.vm.provision "puppet" do |puppet|
     # These are all default settings, just stating explicitly for clarity
