@@ -6,3 +6,5 @@
 modules/
 .librarian
 Puppetfile.lock
+Gemfile.lock
+.tmp/
