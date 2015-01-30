@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    # Build Vagrant box based on Fedora 20
+  # Build Vagrant box based on Fedora 20
   config.vm.box = "chef/centos-7.0"
 
   # Add Puppet repo and install Puppet
