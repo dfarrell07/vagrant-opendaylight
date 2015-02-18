@@ -1,6 +1,6 @@
-## vagrant-opendaylight
-
 [![Join the chat at https://gitter.im/dfarrell07/vagrant-opendaylight](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dfarrell07/vagrant-opendaylight?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## vagrant-opendaylight
 
 Vagrant environment with support for many different types of OpenDaylight deployments.
 
