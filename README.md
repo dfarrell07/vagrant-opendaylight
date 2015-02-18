@@ -1,5 +1,7 @@
 ## vagrant-opendaylight
 
+[![Join the chat at https://gitter.im/dfarrell07/vagrant-opendaylight](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dfarrell07/vagrant-opendaylight?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Vagrant environment with support for many different types of OpenDaylight deployments.
 
 **Note: This project is new, incomplete and under active development. Many planned features are still just TODOs on our [issue tracker](https://github.com/dfarrell07/vagrant-opendaylight/issues). Contributions welcome!**
