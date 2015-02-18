@@ -19,6 +19,8 @@ fi
 # Download and validate ODL num_runs times
 for ((run=0;run<$num_runs;run++)); do
     echo "# Starting run $run"
+    start_time=`date +%s`
+    echo "Start time: `date`"
 
     # Remove old ODL install if present
     if [ -f $dl_dir/$dl_name ]; then
@@ -31,6 +33,7 @@ for ((run=0;run<$num_runs;run++)); do
     #   * The output path was made into vars for shared access
     #   * The output dir may be configured to use CWD vs `/usr/src` (avoids root)
     #   * Some extra spaces were removed
+    echo "Starting ODL dl"
     curl -s -L -o $dl_dir/$dl_name https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.2.2-Helium-SR2/distribution-karaf-0.2.2-Helium-SR2.tar.gz
 
     # Validate that download was successful
@@ -45,5 +48,9 @@ for ((run=0;run<$num_runs;run++)); do
         exit 1
     fi
 
+    end_time=`date +%s`
+    total_time=`expr $end_time - $start_time`
+    echo "End time: `date`"
+    echo "Run $run time: $total_time seconds"
     echo "# Ending run $run"
 done
