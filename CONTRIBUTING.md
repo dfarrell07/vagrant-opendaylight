@@ -48,4 +48,4 @@ The priority-related issue labels (`prio:high`, `piro:normal`...) are also impor
 
 The `info:progress` labels may not always be up-to-date, but will be used when appropriate (typically long-standing issues that take multiple commits).
 
-Issues can be referenced and manipulated from git commit messages. Just referencing the issue's number (`#42`) will link the commit and issue. Issues can also be closed from commit messages with `closes #42` (and [a verity of other key words](https://help.github.com/articles/closing-issues-via-commit-messages/)).
+Issues can be referenced and manipulated from git commit messages. Just referencing the issue's number (`#42`) will link the commit and issue. Issues can also be closed from commit messages with `closes #42` (and [a variety of other key words](https://help.github.com/articles/closing-issues-via-commit-messages/)).
