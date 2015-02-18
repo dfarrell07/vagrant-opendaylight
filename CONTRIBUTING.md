@@ -1,14 +1,13 @@
-## Contributing to vagrant-opendaylight
+# Contributing to vagrant-opendaylight
 
 We work to make contributing easy. Please let us know if you spot something we can do better.
 
-Spot something that could be better, needs to be fixed, should be added, etc?
+#### Table of Contents 
+1. [Overview](#overview)
+1. [Contact](#contact)
+    * [Issues](#issues)
 
-You're in the right place!
-
-TODO: Index
-
-### Overview
+## Overview
 
 We use GitHub Issues for issue tracking, including bug reports, feature requests and questions.
 
@@ -28,13 +27,13 @@ Basics of a pull request:
 * We'll give feedback and get your changed merged ASAP.
 * You contributed! Thank you!
 
-### Contact
+## Contact
 
 Please use public, documented communication instead of reaching out to developers 1-1.
 
 Open Source projects benefit from always communicating in the open. Other people may run into the same issue, search for a similar trace and find your question and their answer. More eyes may even get your question answered faster.
 
-#### Issues
+### Issues
 
 Please use our GitHub Issues freely, even for small things. They are the primary method by which we track what's going on in the project.
 
