@@ -4,18 +4,19 @@ We work to make contributing easy. Please let us know if you spot something we c
 
 #### Table of Contents 
 1. [Overview](#overview)
+1. [Patches](#patches)
 1. [Contact](#contact)
     * [Issues](#issues)
 
 ## Overview
 
-We use GitHub Issues for issue tracking, including bug reports, feature requests and questions.
+We use [GitHub Issues](https://github.com/dfarrell07/vagrant-opendaylight/issues) for most communication, including bug reports, feature requests and questions.
 
-We accept patches via GitHub Pull Requests. Please fork our repo, make your changes, commit them to a feature branch and *submit a PR to have it merged back into this project*. We'll give feedback and get it merged ASAP.
+We accept patches via [GitHub Pull Requests](https://github.com/dfarrell07/vagrant-opendaylight/pulls). Please fork our repo, make your changes, commit them to a feature branch and *submit a PR to have it merged back into this project*. We'll give feedback and get it merged ASAP.
 
 ## Patches
 
-Please use Pull Requests to submit patches.
+Please use [Pull Requests]https://github.com/dfarrell07/vagrant-opendaylight/pulls) to submit patches.
 
 Basics of a pull request:
 * Use the GitHub web UI to fork our repo
@@ -31,11 +32,13 @@ Basics of a pull request:
 
 Please use public, documented communication instead of reaching out to developers 1-1.
 
-Open Source projects benefit from always communicating in the open. Other people may run into the same issue, search for a similar trace and find your question and their answer. More eyes may even get your question answered faster.
+Open Source projects benefit from always communicating in the open. Other people may run into the same issue, search for a similar trace and find your question, already answered. More eyes may even get your question answered faster.
+
+We prefer [Issues](https://github.com/dfarrell07/vagrant-opendaylight/issues) for most communication.
 
 ### Issues
 
-Please use our GitHub Issues freely, even for small things. They are the primary method by which we track what's going on in the project.
+Please use our [GitHub Issues freely](https://github.com/dfarrell07/vagrant-opendaylight/issues), even for small things! They are the primary method by which we track what's going on in the project.
 
 The lables assigned to an issue can tell you important things about it.
 
