@@ -14,6 +14,20 @@ We use GitHub Issues for issue tracking, including bug reports, feature requests
 
 We accept patches via GitHub Pull Requests. Please fork our repo, make your changes, commit them to a feature branch and *submit a PR to have it merged back into this project*. We'll give feedback and get it merged ASAP.
 
+### Patches
+
+Please use Pull Requests to submit patches.
+
+Basics of a pull request:
+* Use the GitHub web UI to fork our repo
+* Clone your fork to your local system
+* Make your changes
+* Commit your changes, using a good commit message and referencing any applicable issues
+* Push your commit
+* Submit a pull request against the project, again using GitHub's web UI
+* We'll give feedback and get your changed merged ASAP.
+* You contributed! Thank you!
+
 ### Contact
 
 Please use public, documented communication instead of reaching out to developers 1-1.
