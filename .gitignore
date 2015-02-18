@@ -8,3 +8,5 @@ modules/
 Puppetfile.lock
 Gemfile.lock
 .tmp/
+*.tar.gz
+*.log
