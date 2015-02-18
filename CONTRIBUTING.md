@@ -4,10 +4,10 @@ We work to make contributing easy. Please let us know if you spot something we c
 
 #### Table of Contents 
 1. [Overview](#overview)
-1. [Patches](#patches)
-1. [Contact](#contact)
+1. [Communication](#communication)
     * [Issues](#issues)
     * [Gitter](#gitter)
+1. [Patches](#patches)
 
 ## Overview
 
@@ -15,21 +15,7 @@ We use [GitHub Issues](https://github.com/dfarrell07/vagrant-opendaylight/issues
 
 We accept patches via [GitHub Pull Requests](https://github.com/dfarrell07/vagrant-opendaylight/pulls). Please fork our repo, make your changes, commit them to a feature branch and *submit a PR to have it merged back into this project*. We'll give feedback and get it merged ASAP.
 
-## Patches
-
-Please use [Pull Requests](https://github.com/dfarrell07/vagrant-opendaylight/pulls) to submit patches.
-
-Basics of a pull request:
-* Use the GitHub web UI to fork our repo
-* Clone your fork to your local system
-* Make your changes
-* Commit your changes, using a good commit message and referencing any applicable issues
-* Push your commit
-* Submit a pull request against the project, again using GitHub's web UI
-* We'll give feedback and get your changed merged ASAP.
-* You contributed! Thank you!
-
-## Contact
+## Communication
 
 Please use public, documented communication instead of reaching out to developers 1-1.
 
@@ -56,3 +42,17 @@ Issues can be referenced and manipulated from git commit messages. Just referenc
 We're experimenting with Gitter, a GitHub-driven chat service that works on a per-repo basis.
 
 Feel free to hop in [our room](https://gitter.im/dfarrell07/vagrant-opendaylight) and test it out with us.
+
+## Patches
+
+Please use [Pull Requests](https://github.com/dfarrell07/vagrant-opendaylight/pulls) to submit patches.
+
+Basics of a pull request:
+* Use the GitHub web UI to fork our repo
+* Clone your fork to your local system
+* Make your changes
+* Commit your changes, using a good commit message and referencing any applicable issues
+* Push your commit
+* Submit a pull request against the project, again using GitHub's web UI
+* We'll give feedback and get your changed merged ASAP.
+* You contributed! Thank you!
