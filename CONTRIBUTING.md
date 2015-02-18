@@ -13,7 +13,7 @@ We use GitHub Issues for issue tracking, including bug reports, feature requests
 
 We accept patches via GitHub Pull Requests. Please fork our repo, make your changes, commit them to a feature branch and *submit a PR to have it merged back into this project*. We'll give feedback and get it merged ASAP.
 
-### Patches
+## Patches
 
 Please use Pull Requests to submit patches.
 
