@@ -13,3 +13,9 @@ Goals of the project include:
 * Serve as working example documentation for deploying OpenDaylight.
 * Give developers quick, easy access to different types of OpenDaylight deployments for debugging.
 * Provide a people new to OpenDaylight a simple, reliable way to get some hands-on time with ODL.
+
+### Contributing
+
+We work to make contributing easy. Please let us know if you spot something we can do better.
+
+See our [CONTRIBUTING.md](https://github.com/dfarrell07/vagrant-opendaylight/blob/master/CONTRIBUTING.md) file for information.
