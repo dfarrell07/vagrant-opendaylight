@@ -11,13 +11,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_puppet.vm.box = "chef/centos-7.0"
 
-    # Add Puppet repo and install Puppet
-    cent7_puppet.vm.provision "shell", inline: "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm"
-    cent7_puppet.vm.provision "shell", inline: "yum install -y puppet"
+    # Add EPEL repo for access to Puppet et al
+    cent7_puppet.vm.provision "shell", inline: "yum install -y epel-release"
 
-    # Install sshpass, used by connect.sh helper script
-    # It's not currently in the CentOS 7 repos
-    cent7_puppet.vm.provision "shell", inline: "rpm -ivh ftp://ftp.muug.mb.ca/mirror/fedora/epel/7/x86_64/s/sshpass-1.05-5.el7.x86_64.rpm"
+    # Install Puppet
+    cent7_puppet.vm.provision "shell", inline: "yum install -y puppet"
 
     # Install OpenDaylight using its Puppet module
     cent7_puppet.vm.provision "puppet" do |puppet|
@@ -33,13 +31,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_puppet.vm.box = "chef/centos-7.0"
 
-    # Add Puppet repo and install Puppet
-    cent7_puppet.vm.provision "shell", inline: "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm"
-    cent7_puppet.vm.provision "shell", inline: "yum install -y puppet"
+    # Add EPEL repo for access to Puppet et al
+    cent7_puppet.vm.provision "shell", inline: "yum install -y epel-release"
 
-    # Install sshpass, used by connect.sh helper script
-    # It's not currently in the CentOS 7 repos
-    cent7_puppet.vm.provision "shell", inline: "rpm -ivh ftp://ftp.muug.mb.ca/mirror/fedora/epel/7/x86_64/s/sshpass-1.05-5.el7.x86_64.rpm"
+    # Install Puppet
+    cent7_puppet.vm.provision "shell", inline: "yum install -y puppet"
 
     # Install OpenDaylight using its Puppet module
     cent7_puppet.vm.provision "puppet" do |puppet|
@@ -49,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifests_path = "manifests"
     end
   end
+
   # Box that installed ODL via Puppet mod on Fedora 20
   config.vm.define "fed20_puppet" do |fed20_puppet|
     # Build Vagrant box based on Fedora 20
