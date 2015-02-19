@@ -19,10 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Install OpenDaylight using its Puppet module
     cent7_puppet.vm.provision "puppet" do |puppet|
-      # These are all default settings, just stating explicitly for clarity
       puppet.module_path = ["modules"]
       puppet.manifest_file = "odl_rpm_install.pp"
-      puppet.manifests_path = "manifests"
     end
   end
 
@@ -39,10 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Install OpenDaylight using its Puppet module
     cent7_puppet.vm.provision "puppet" do |puppet|
-      # These are all default settings, just stating explicitly for clarity
       puppet.module_path = ["modules"]
       puppet.manifest_file = "odl_tarball_install.pp"
-      puppet.manifests_path = "manifests"
     end
   end
 
@@ -56,10 +52,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Install OpenDaylight using its Puppet module
     fed20_puppet.vm.provision "puppet" do |puppet|
-      # These are all default settings, just stating explicitly for clarity
       puppet.module_path = ["modules"]
       puppet.manifest_file = "default.pp"
-      puppet.manifests_path = "manifests"
     end
   end
 
