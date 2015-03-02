@@ -56,4 +56,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "odl_rpm_install.pp"
     end
   end
+
+  # Box that installs ODL via Puppet tarball method on Fedora 20
+  config.vm.define "fed20_puppet_tarball" do |f20_pup_tb|
+    # Build Vagrant box based on Fedora 20
+    f20_pup_tb.vm.box = "chef/fedora-20"
+
+    # Install Puppet
+    f20_pup_tb.vm.provision "shell", inline: "yum install -y puppet"
+
+    # Install OpenDaylight using its Puppet module
+    f20_pup_tb.vm.provision "puppet" do |puppet|
+      puppet.module_path = ["modules"]
+      puppet.manifest_file = "odl_tarball_install.pp"
+    end
+  end
 end
