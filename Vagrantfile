@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
 
   # Box that installs ODL via Puppet RPM method on CentOS 7
-  config.vm.define "cent7_puppet_rpm" do |cent7_pup_rpm|
+  config.vm.define "cent7_pup_rpm" do |cent7_pup_rpm|
     # Build Vagrant box based on CentOS 7
     cent7_pup_rpm.vm.box = "chef/centos-7.0"
 
@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via Puppet tarball method on CentOS 7
-  config.vm.define "cent7_puppet_tarball" do |cent7_pup_tb|
+  config.vm.define "cent7_pup_tb" do |cent7_pup_tb|
     # Build Vagrant box based on CentOS 7
     cent7_pup_tb.vm.box = "chef/centos-7.0"
 
@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
 
   # Box that installs ODL via Puppet RPM method on Fedora 20
-  config.vm.define "fed20_puppet_rpm" do |f20_pup_rpm|
+  config.vm.define "f20_pup_rpm" do |f20_pup_rpm|
     # Build Vagrant box based on Fedora 20
     f20_pup_rpm.vm.box = "chef/fedora-20"
 
@@ -89,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via Puppet tarball method on Fedora 20
-  config.vm.define "fed20_puppet_tarball" do |f20_pup_tb|
+  config.vm.define "f20_pup_tb" do |f20_pup_tb|
     # Build Vagrant box based on Fedora 20
     f20_pup_tb.vm.box = "chef/fedora-20"
 
@@ -128,7 +128,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
 
   # Box that installs ODL via Puppet RPM method on Fedora 21
-  config.vm.define "fed21_puppet_rpm" do |f21_pup_rpm|
+  config.vm.define "f21_pup_rpm" do |f21_pup_rpm|
     # Build Vagrant box based on Fedora 21
     f21_pup_rpm.vm.box = "chef/fedora-21"
 
@@ -143,7 +143,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via Puppet tarball method on Fedora 21
-  config.vm.define "fed21_puppet_tarball" do |f21_pup_tb|
+  config.vm.define "f21_pup_tb" do |f21_pup_tb|
     # Build Vagrant box based on Fedora 21
     f21_pup_tb.vm.box = "chef/fedora-21"
 
