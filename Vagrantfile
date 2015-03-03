@@ -101,4 +101,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "odl_tarball_install.pp"
     end
   end
+
+  # Box that installs ODL directly from an RPM on CentOS 7
+  config.vm.define "cent7_rpm" do |cent7_rpm|
+    # Build Vagrant box based on CentOS 7
+    cent7_rpm.vm.box = "chef/centos-7.0"
+
+    # Install EPEL repos for access to sshpass (used by scripts/connect.sh)
+    cent7_rpm.vm.provision "shell", inline: "yum install -y epel-release"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    cent7_rpm.vm.provision "file", source: "./repo_configs/odl_cent7.repo",
+                                   destination: "/tmp/odl_cent7.repo"
+    cent7_rpm.vm.provision "shell", inline: "mv /tmp/odl_cent7.repo /etc/yum.repos.d/opendaylight.repo"
+
+    # Install ODL using the Yum repo config added above
+    cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    cent7_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
 end
