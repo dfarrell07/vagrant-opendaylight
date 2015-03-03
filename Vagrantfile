@@ -6,6 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  #
+  # CentOS 7 boxes
+  #
+
   # Box that installs ODL via Puppet RPM method on CentOS 7
   config.vm.define "cent7_puppet_rpm" do |cent7_pup_rpm|
     # Build Vagrant box based on CentOS 7
@@ -42,6 +46,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL directly from an RPM on CentOS 7
+  config.vm.define "cent7_rpm" do |cent7_rpm|
+    # Build Vagrant box based on CentOS 7
+    cent7_rpm.vm.box = "chef/centos-7.0"
+
+    # Install EPEL repos for access to sshpass (used by scripts/connect.sh)
+    cent7_rpm.vm.provision "shell", inline: "yum install -y epel-release"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    cent7_rpm.vm.provision "file", source: "./repo_configs/odl_cent7.repo",
+                                   destination: "/tmp/odl_cent7.repo"
+    cent7_rpm.vm.provision "shell", inline: "mv /tmp/odl_cent7.repo /etc/yum.repos.d/opendaylight.repo"
+
+    # Install ODL using the Yum repo config added above
+    cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    cent7_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  #
+  # Fedora 20 boxes
+  #
+
   # Box that installs ODL via Puppet RPM method on Fedora 20
   config.vm.define "fed20_puppet_rpm" do |f20_pup_rpm|
     # Build Vagrant box based on Fedora 20
@@ -72,6 +103,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL directly from an RPM on Fedora 20
+  config.vm.define "f20_rpm" do |f20_rpm|
+    # Build Vagrant box based on Fedora 20
+    f20_rpm.vm.box = "chef/fedora-20"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    f20_rpm.vm.provision "file", source: "./repo_configs/odl_f20.repo",
+                                   destination: "/tmp/odl_f20.repo"
+    f20_rpm.vm.provision "shell", inline: "mv /tmp/odl_f20.repo /etc/yum.repos.d/opendaylight.repo"
+
+    # Install ODL using the Yum repo config added above
+    f20_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    f20_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  #
+  # Fedora 21 boxes
+  #
+
   # Box that installs ODL via Puppet RPM method on Fedora 21
   config.vm.define "fed21_puppet_rpm" do |f21_pup_rpm|
     # Build Vagrant box based on Fedora 21
@@ -100,49 +155,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.module_path = ["modules"]
       puppet.manifest_file = "odl_tarball_install.pp"
     end
-  end
-
-  # Box that installs ODL directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm" do |cent7_rpm|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm.vm.box = "chef/centos-7.0"
-
-    # Install EPEL repos for access to sshpass (used by scripts/connect.sh)
-    cent7_rpm.vm.provision "shell", inline: "yum install -y epel-release"
-
-    # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm.vm.provision "file", source: "./repo_configs/odl_cent7.repo",
-                                   destination: "/tmp/odl_cent7.repo"
-    cent7_rpm.vm.provision "shell", inline: "mv /tmp/odl_cent7.repo /etc/yum.repos.d/opendaylight.repo"
-
-    # Install ODL using the Yum repo config added above
-    cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 20
-  config.vm.define "f20_rpm" do |f20_rpm|
-    # Build Vagrant box based on Fedora 20
-    f20_rpm.vm.box = "chef/fedora-20"
-
-    # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    f20_rpm.vm.provision "file", source: "./repo_configs/odl_f20.repo",
-                                   destination: "/tmp/odl_f20.repo"
-    f20_rpm.vm.provision "shell", inline: "mv /tmp/odl_f20.repo /etc/yum.repos.d/opendaylight.repo"
-
-    # Install ODL using the Yum repo config added above
-    f20_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f20_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
   # Box that installs ODL directly from an RPM on Fedora 21
