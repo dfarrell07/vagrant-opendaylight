@@ -8,9 +8,9 @@ Vagrant environment with support for many different types of OpenDaylight deploy
 
 #### Table of Contents
 1. [Overview](#overview)
-1. [Contributing](#contributing)
 1. [Starting your first box](#starting-your-first-box)
     * [Installing Vagrant](#installing-vagrant)
+1. [Contributing](#contributing)
 
 ### Overview
 
