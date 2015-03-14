@@ -9,16 +9,18 @@ Vagrant environment with support for many different types of OpenDaylight deploy
 #### Table of Contents
 1. [Overview](#overview)
 1. [Contributing](#contributing)
+1. [Starting your first box](#starting-your-first-box)
+    * [Installing Vagrant](#installing-vagrant)
 
 ### Overview
 
-This project supports provisioning Vagrant hosts using many different OpenDaylight deployment options (RPM directly, RPM via Puppet, tarball via Puppet...) and against different OSs (CentOS 7, Fedora 20).
+This project supports provisioning Vagrant hosts using many different OpenDaylight deployment options (RPM directly, RPM via Puppet, tarball via Puppet...) and against different OSs (CentOS 7, Fedora 20, Fedora 21).
 
 Goals of the project include:
 
 * Serve as working example documentation for deploying OpenDaylight.
 * Give developers quick, easy access to different types of OpenDaylight deployments for debugging.
-* Provide a people new to OpenDaylight a simple, reliable way to get some hands-on time with ODL.
+* Provide a simple, reliable way to get some hands-on time with ODL.
 
 ### Starting your first box
 
