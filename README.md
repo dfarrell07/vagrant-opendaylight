@@ -30,13 +30,13 @@ If you don't have Vagrant installed, head over to the [Vagrant Downloads](https:
 
 Assuming you're on Fedora/RHEL/CentOS, find the .rpm file you just downloaded and install it:
 
-```
+```ShellSession
 sudo rpm -i <name of rpm>
 ```
 
 Vagrant uses various "providers" for virtualization support. By default, it uses VirtualBox. If you don't have VirtualBox installed, you'll see an error message when you try to `vagrant up` anything. Install VirtualBox (Fedora/RHEL/CentOS):
 
-```
+```ShellSession
 sudo yum install VirtualBox kmod-VirtualBox -y
 ```
 
@@ -46,7 +46,7 @@ You may need to restart your system, or at least `systemctl restart systemd-modu
 
 We use Bundler to make gem managment trivial.
 
-```
+```ShellSession
 [~/vagrant-opendaylight]$ gem install bundler
 # snip
 [~/vagrant-opendaylight]$ bundle install
@@ -59,7 +59,7 @@ Among other things, this will provide `librarian-puppet`, which is required for 
 
 Once you've installed `librarian-puppet` through Bundler (as described above), you can use it to install our Puppet module dependences.
 
-```
+```ShellSession
 [~/vagrant-opendaylight]$ librarian-puppet install
 [~/vagrant-opendaylight]$ ls modules
 archive  java  opendaylight  stdlib
@@ -69,7 +69,7 @@ archive  java  opendaylight  stdlib
 
 You should now be able to use Vagrant to build and connect to an ODL box, using the deployment method of your choice.
 
-```
+```ShellSession
 [~/vagrant-opendaylight]$ vagrant status
 Current machine states:
 
