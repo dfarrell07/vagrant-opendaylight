@@ -42,6 +42,52 @@ sudo yum install VirtualBox kmod-VirtualBox -y
 
 You may need to restart your system, or at least `systemctl restart systemd-modules-load.service`. If you see Kernel-related errors, try that.
 
+#### Installing Required Gems
+
+We use Bundler to make gem managment trivial.
+
+```
+[~/vagrant-opendaylight]$ gem install bundler
+# snip
+[~/vagrant-opendaylight]$ bundle install
+# snip
+```
+
+Among other things, this will provide `librarian-puppet`, which is required for the next section.
+
+#### Installing Required Puppet Modules
+
+Once you've installed `librarian-puppet` through Bundler (as described above), you can use it to install our Puppet module dependences.
+
+```
+[~/vagrant-opendaylight]$ librarian-puppet install
+[~/vagrant-opendaylight]$ ls modules
+archive  java  opendaylight  stdlib
+```
+
+#### Building a box
+
+You should now be able to use Vagrant to build and connect to an ODL box, using the deployment method of your choice.
+
+```
+[~/vagrant-opendaylight]$ vagrant status
+Current machine states:
+
+cent7_pup_rpm             not created (virtualbox)
+cent7_pup_tb              not created (virtualbox)
+cent7_rpm                 not created (virtualbox)
+f20_pup_rpm               not created (virtualbox)
+f20_pup_tb                not created (virtualbox)
+f20_rpm                   not created (virtualbox)
+f21_pup_rpm               not created (virtualbox)
+f21_pup_tb                not created (virtualbox)
+f21_rpm                   not created (virtualbox)
+# snip
+[~/vagrant-opendaylight]$ vagrant up cent7_pup_rpm
+# snip
+[~/vagrant-opendaylight]$ vagrant ssh cent7_pup_rpm
+```
+
 ### Contributing
 
 We work to make contributing easy. Please let us know if you spot something we can do better.
