@@ -44,7 +44,7 @@ You may need to restart your system, or at least `systemctl restart systemd-modu
 
 #### Installing Required Gems
 
-We use Bundler to make gem managment trivial.
+We use Bundler to make gem management trivial.
 
 ```ShellSession
 [~/vagrant-opendaylight]$ gem install bundler
