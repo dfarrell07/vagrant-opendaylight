@@ -30,7 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install OpenDaylight using its Puppet module
     cent7_pup_rpm.vm.provision "puppet" do |puppet|
       puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_rpm_install.pp"
+      puppet.manifest_file = "odl_install.pp"
     end
   end
 
@@ -90,7 +90,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install OpenDaylight using its Puppet module
     f20_pup_rpm.vm.provision "puppet" do |puppet|
       puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_rpm_install.pp"
+      puppet.manifest_file = "odl_install.pp"
     end
   end
 
@@ -144,7 +144,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install OpenDaylight using its Puppet module
     f21_pup_rpm.vm.provision "puppet" do |puppet|
       puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_rpm_install.pp"
+      puppet.manifest_file = "odl_install.pp"
     end
   end
 
