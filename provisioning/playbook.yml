@@ -1,11 +1,5 @@
 ---
 - hosts: all
   sudo: yes
-  tasks:
-    - name: Add ODL yum repo
-      copy:
-        src=opendaylight.repo
-        dest=/etc/yum.repos.d/
-        owner=root
-        group=root
-        mode=0644
+  roles:
+    - opendaylight
