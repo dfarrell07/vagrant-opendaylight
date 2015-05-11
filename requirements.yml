@@ -1,0 +1,6 @@
+# This is used to mange Ansible roles
+# http://docs.ansible.com/galaxy.html#installing-multiple-roles-from-a-file
+
+- name: opendaylight
+  src: https://github.com/dfarrell07/ansible-opendaylight
+  path: roles/
