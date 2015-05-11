@@ -34,6 +34,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL via its Ansible role on CentOS 7
+  config.vm.define "cent7_ansible" do |cent7_ansbile|
+    # Build Vagrant box based on CentOS 7
+    cent7_ansbile.vm.box = "chef/centos-7.0"
+
+    # Install ODL using the Ansible provisioner
+    cent7_ansbile.vm.provision "ansible" do |ansible|
+      # Path to Ansbile playbook that install's ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/playbook.yml"
+    end
+  end
+
   # Box that installs ODL via Puppet tarball method on CentOS 7
   config.vm.define "cent7_pup_tb" do |cent7_pup_tb|
     # Build Vagrant box based on CentOS 7
