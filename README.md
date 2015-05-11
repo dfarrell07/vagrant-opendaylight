@@ -92,4 +92,4 @@ f21_rpm                   not created (virtualbox)
 
 We work to make contributing easy. Please let us know if you spot something we can do better.
 
-See our [CONTRIBUTING.md](https://github.com/dfarrell07/vagrant-opendaylight/blob/master/CONTRIBUTING.md) file for information.
+See our [CONTRIBUTING.markdown](https://github.com/dfarrell07/vagrant-opendaylight/blob/master/CONTRIBUTING.markdown) file for information.
