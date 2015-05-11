@@ -1,5 +1,6 @@
-# This is used to mange Ansible roles
+# This is used to manage Ansible role dependences
 # http://docs.ansible.com/galaxy.html#installing-multiple-roles-from-a-file
+# Install with: `ansible-galaxy install -r requirements.yml`
 
 - name: opendaylight
   src: https://github.com/dfarrell07/ansible-opendaylight
