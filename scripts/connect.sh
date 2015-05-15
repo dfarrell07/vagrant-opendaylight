@@ -1,18 +1,21 @@
 #!/usr/bin/env sh
 # Connect to ODL Karaf shell. Mostly used for testing.
 
-# Output verbose debug info (true) or not (anything else)
-VERBOSE=true
 # Port that the Karaf shell listens on
 KARAF_SHELL_PORT=8101
 
 # This could be done with public key crypto, but sshpass is easier
 if ! command -v sshpass &> /dev/null; then
     echo "Installing sshpass. It's used connecting non-interactively"
-    if "$VERBOSE" = true; then
-        sudo yum install -y sshpass
-    else
-        sudo yum install -y sshpass &> /dev/null
+    if ! sudo yum install -y sshpass; then
+        echo "Couldn't find sshpass pkg, trying to install EPEL"
+        if sudo yum install -y epel-release; then
+            echo "Installed EPEL, re-attempting to install sshpass"
+            sudo yum install -y sshpass
+        else
+            echo "Failed to install sshpass and EPEL, giving up"
+            exit 1
+        fi
     fi
 fi
 
