@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Install ODL using the Ansible provisioner
     cent7_ansible.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that install's ODL using ODL's Ansible role
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
       ansible.playbook = "provisioning/playbook.yml"
     end
   end
