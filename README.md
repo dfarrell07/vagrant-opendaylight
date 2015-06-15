@@ -10,11 +10,15 @@ deployments.
 #### Table of Contents
 
 1. [Overview](#overview)
-1. [Starting your first box](#starting-your-first-box)
-    * [Installing Vagrant](#installing-vagrant)
-    * [Installing Required Gems](#installing-required-gems)
-    * [Installing Required Puppet Modules](#installing-required-puppet-modules)
-    * [Building a box](#building-a-box)
+    * [Available Boxes](#available-boxes)
+1. [General Dependencies: Vagrant](#general-dependencies-vagrant)
+1. [Ansible Deployments](#ansible-deployments)
+    * [Ansible Dependencies: Roles](#ansible-dependencies-roles)
+    * [Ansible Dependencies: `ansible-galaxy`](#ansible-dependencies-ansible-galaxy)
+1. [Puppet Deployments](#puppet-deployments)
+    * [Puppet Dependencies: Gems](#puppet-dependencies-gems)
+    * [Puppet Dependencies: Modules](#puppet-dependencies-modules)
+1. [Standalone RPM Deployments](#standalone-rpm-deployments)
 1. [Contributing](#contributing)
 
 ### Overview
@@ -51,7 +55,7 @@ f21_rpm                   not created (virtualbox)
 We'll replace our (soon to be EOL) [F20 boxes with F22 ones][5] once ODL
 Lithium is released.
 
-### General Dependencies:: Vagrant
+### General Dependencies: Vagrant
 
 If you don't have Vagrant installed, head over to the [Vagrant Downloads][3]
 page and grab the latest version for your OS. Fedora/RHEL/CentOS folks need
@@ -119,9 +123,7 @@ management trivial.
 
 ```ShellSession
 [~/vagrant-opendaylight]$ gem install bundler
-# snip
 [~/vagrant-opendaylight]$ bundle install
-# snip
 ```
 
 #### Puppet Dependencies: Modules
