@@ -2,6 +2,8 @@
 
 ## vagrant-opendaylight
 
+*An OpenDaylight deployment sandbox.*
+
 Vagrant environment with support for many different types of OpenDaylight
 deployments.
 
@@ -17,9 +19,9 @@ deployments.
 
 ### Overview
 
-This project supports provisioning Vagrant hosts using many different
-OpenDaylight deployment options (RPM directly, RPM via Puppet, tarball
-via Puppet...) and against different OSs (CentOS 7, Fedora 20, Fedora 21).
+This project supports provisioning Vagrant hosts using many combinations
+of host OSs (CentOS 7, Fedora 20, Fedora 21) and OpenDaylight deployment
+options (RPM directly, Puppet mod, Ansible role, etc).
 
 Goals of the project include:
 
@@ -28,9 +30,28 @@ Goals of the project include:
 deployments for debugging.
 * Provide a simple, reliable way to get some hands-on time with ODL.
 
-### Starting your first box
+#### Available Boxes
 
-#### Installing Vagrant
+```ShellSession
+[~/vagrant-opendaylight]$ vagrant status
+Current machine states:
+
+cent7_pup_rpm             not created (virtualbox)
+cent7_ansible             not created (virtualbox)
+cent7_pup_tb              not created (virtualbox)
+cent7_rpm                 not created (virtualbox)
+f20_pup_rpm               not created (virtualbox)
+f20_pup_tb                not created (virtualbox)
+f20_rpm                   not created (virtualbox)
+f21_pup_rpm               not created (virtualbox)
+f21_pup_tb                not created (virtualbox)
+f21_rpm                   not created (virtualbox)
+```
+
+We'll replace our (soon to be EOL) [F20 boxes with F22 ones][5] once ODL
+Lithium is released.
+
+### General Dependencies:: Vagrant
 
 If you don't have Vagrant installed, head over to the [Vagrant Downloads][3]
 page and grab the latest version for your OS. Fedora/RHEL/CentOS folks need
@@ -50,15 +71,51 @@ message when you try to `vagrant up` anything. Install VirtualBox
 (Fedora/RHEL/CentOS):
 
 ```ShellSession
-sudo yum install VirtualBox kmod-VirtualBox -y
+sudo yum install -y VirtualBox kmod-VirtualBox
 ```
 
 You may need to restart your system, or at least `systemctl restart
 systemd-modules-load.service`. If you see Kernel-related errors, try that.
 
-#### Installing Required Gems
+### Ansible Deployments
 
-We use Bundler to make gem management trivial.
+Deploying OpenDaylight using its Ansible role.
+
+#### Ansible Dependencies: `ansible-galaxy`
+
+The recommended way to install OpenDaylight's Ansible role, for use by
+Vagrant's Ansible provisioner, is via the `ansible-galaxy` tool. It
+ships with Ansible, so you may already have it installed.
+
+```ShellSession
+sudo yum install -y ansible
+```
+
+#### Ansible Dependencies: Roles
+
+After you install the `ansible-galaxy` tool, point it at the project's
+`requirements.yml` file to install ODL's role.
+
+```ShellSession
+[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml
+```
+
+To update the Ansible role to the latest from the project's `master` branch,
+add a `--force` flag.
+
+```ShellSession
+[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml --force
+```
+
+### Puppet Deployments
+
+Deploying OpenDaylight using its Puppet module.
+
+#### Puppet Dependencies: Gems
+
+Deploying OpenDaylight using Puppet as a Vagrant provisioner requires
+the `puppet` and `librarian-puppet` gems. We use Bundler to make gem
+management trivial.
 
 ```ShellSession
 [~/vagrant-opendaylight]$ gem install bundler
@@ -67,13 +124,12 @@ We use Bundler to make gem management trivial.
 # snip
 ```
 
-Among other things, this will provide `librarian-puppet`, which is required
-for the next section.
+#### Puppet Dependencies: Modules
 
-#### Installing Required Puppet Modules
-
-Once you've installed `librarian-puppet` through Bundler (as described above),
-you can use it to install our Puppet module dependences.
+In order to use the ODL Puppet mod as a Vagrant provisioner, you'll of course
+need to install it. The `librarian-puppet` gem (install docs above) can make
+use of our `Puppetfile` and the dependency declarations of the ODL Puppet mod
+to trivially install everything we need.
 
 ```ShellSession
 [~/vagrant-opendaylight]$ librarian-puppet install
@@ -81,29 +137,18 @@ you can use it to install our Puppet module dependences.
 archive  java  opendaylight  stdlib
 ```
 
-#### Building a box
-
-You should now be able to use Vagrant to build and connect to an ODL box,
-using the deployment method of your choice.
+`librarian-puppet` can also handle Puppet module updates.
 
 ```ShellSession
-[~/vagrant-opendaylight]$ vagrant status
-Current machine states:
-
-cent7_pup_rpm             not created (virtualbox)
-cent7_pup_tb              not created (virtualbox)
-cent7_rpm                 not created (virtualbox)
-f20_pup_rpm               not created (virtualbox)
-f20_pup_tb                not created (virtualbox)
-f20_rpm                   not created (virtualbox)
-f21_pup_rpm               not created (virtualbox)
-f21_pup_tb                not created (virtualbox)
-f21_rpm                   not created (virtualbox)
-# snip
-[~/vagrant-opendaylight]$ vagrant up cent7_pup_rpm
-# snip
-[~/vagrant-opendaylight]$ vagrant ssh cent7_pup_rpm
+[~/vagrant-opendaylight]$ librarian-puppet update
 ```
+
+### Standalone RPM Deployments
+
+Deploying OpenDaylight using its RPM directly, without additional configuration
+from a config management tool.
+
+Standalone RPM deployments don't require any dependencies.
 
 ### Contributing
 
@@ -112,7 +157,9 @@ we can do better.
 
 See our [CONTRIBUTING.markdown][4] file for information.
 
+
 [1]: https://badges.gitter.im/Join%20Chat.svg
 [2]: https://gitter.im/dfarrell07/vagrant-opendaylight?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [3]: https://www.vagrantup.com/downloads.html
 [4]: https://github.com/dfarrell07/vagrant-opendaylight/blob/master/CONTRIBUTING.markdown
+[5]: https://github.com/dfarrell07/vagrant-opendaylight/issues/26
