@@ -83,7 +83,7 @@ systemd-modules-load.service`. If you see Kernel-related errors, try that.
 
 ### Ansible Deployments
 
-Deploying OpenDaylight using its Ansible role.
+Deploying OpenDaylight using its [Ansible role][6].
 
 #### Ansible Dependencies: `ansible-galaxy`
 
@@ -113,7 +113,7 @@ add a `--force` flag.
 
 ### Puppet Deployments
 
-Deploying OpenDaylight using its Puppet module.
+Deploying OpenDaylight using its [Puppet module][7].
 
 #### Puppet Dependencies: Gems
 
@@ -147,7 +147,7 @@ archive  java  opendaylight  stdlib
 
 ### Standalone RPM Deployments
 
-Deploying OpenDaylight using its RPM directly, without additional configuration
+Deploying OpenDaylight using [its RPM][8] directly, without additional configuration
 from a config management tool.
 
 Standalone RPM deployments don't require any dependencies.
@@ -165,3 +165,6 @@ See our [CONTRIBUTING.markdown][4] file for information.
 [3]: https://www.vagrantup.com/downloads.html
 [4]: https://github.com/dfarrell07/vagrant-opendaylight/blob/master/CONTRIBUTING.markdown
 [5]: https://github.com/dfarrell07/vagrant-opendaylight/issues/26
+[6]: https://github.com/dfarrell07/ansible-opendaylight
+[7]: https://github.com/dfarrell07/puppet-opendaylight
+[8]: https://github.com/opendaylight/integration/tree/master/packaging/rpm
