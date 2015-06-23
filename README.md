@@ -40,6 +40,7 @@ deployments for debugging.
 [~/vagrant-opendaylight]$ vagrant status
 Current machine states:
 
+cent7                     not created (virtualbox)
 cent7_pup_rpm             not created (virtualbox)
 cent7_ansible             not created (virtualbox)
 cent7_pup_tb              not created (virtualbox)

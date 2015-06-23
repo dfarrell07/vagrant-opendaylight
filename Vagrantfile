@@ -16,6 +16,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # CentOS 7 boxes
   #
 
+  # Box that uses OpenDaylight's Vagrant base box
+  config.vm.define "cent7" do |cent7_pup_rpm|
+    # Simply use OpenDaylight's Vagrant base box
+    cent7_pup_rpm.vm.box = "dfarrell07/opendaylight"
+  end
+
   # Box that installs ODL via Puppet RPM method on CentOS 7
   config.vm.define "cent7_pup_rpm" do |cent7_pup_rpm|
     # Build Vagrant box based on CentOS 7
