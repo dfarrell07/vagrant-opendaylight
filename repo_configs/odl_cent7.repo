@@ -1,7 +1,0 @@
-[dfarrell07-OpenDaylight]
-name=Copr repo for OpenDaylight owned by dfarrell07
-baseurl=https://copr-be.cloud.fedoraproject.org/results/dfarrell07/OpenDaylight/epel-7-$basearch/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/dfarrell07/OpenDaylight/pubkey.gpg
-enabled=1

@@ -1,0 +1,5 @@
+[opendaylight-3-candidate]
+name=CentOS CBS OpenDaylight Helium candidate repository
+baseurl=http://cbs.centos.org/repos/nfv7-opendaylight-3-candidate/$basearch/os/
+enabled=1
+gpgcheck=0

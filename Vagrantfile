@@ -82,9 +82,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # We have to do this in two steps, a non-privliated SCP and
     #   a privlaged move.
     #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm.vm.provision "file", source: "./repo_configs/odl_cent7.repo",
-                                   destination: "/tmp/odl_cent7.repo"
-    cent7_rpm.vm.provision "shell", inline: "mv /tmp/odl_cent7.repo /etc/yum.repos.d/opendaylight.repo"
+    cent7_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
+                                   destination: "/tmp/opendaylight-3-candidate.repo"
+    cent7_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
 
     # Install ODL using the Yum repo config added above
     cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
