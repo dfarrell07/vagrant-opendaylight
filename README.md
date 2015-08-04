@@ -24,7 +24,7 @@ deployments.
 ### Overview
 
 This project supports provisioning Vagrant hosts using many combinations
-of host OSs (CentOS 7, Fedora 20, Fedora 21) and OpenDaylight deployment
+of host OSs (CentOS 7, Fedora 21) and OpenDaylight deployment
 options (RPM directly, Puppet mod, Ansible role, etc).
 
 Goals of the project include:
@@ -45,16 +45,10 @@ cent7_pup_rpm             not created (virtualbox)
 cent7_ansible             not created (virtualbox)
 cent7_pup_tb              not created (virtualbox)
 cent7_rpm                 not created (virtualbox)
-f20_pup_rpm               not created (virtualbox)
-f20_pup_tb                not created (virtualbox)
-f20_rpm                   not created (virtualbox)
 f21_pup_rpm               not created (virtualbox)
 f21_pup_tb                not created (virtualbox)
 f21_rpm                   not created (virtualbox)
 ```
-
-We'll replace our (soon to be EOL) [F20 boxes with F22 ones][5] once ODL
-Lithium is released.
 
 ### General Dependencies: Vagrant
 

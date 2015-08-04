@@ -94,60 +94,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   #
-  # Fedora 20 boxes
-  #
-
-  # Box that installs ODL via Puppet RPM method on Fedora 20
-  config.vm.define "f20_pup_rpm" do |f20_pup_rpm|
-    # Build Vagrant box based on Fedora 20
-    f20_pup_rpm.vm.box = "chef/fedora-20"
-
-    # Install Puppet
-    f20_pup_rpm.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    f20_pup_rpm.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_install.pp"
-    end
-  end
-
-  # Box that installs ODL via Puppet tarball method on Fedora 20
-  config.vm.define "f20_pup_tb" do |f20_pup_tb|
-    # Build Vagrant box based on Fedora 20
-    f20_pup_tb.vm.box = "chef/fedora-20"
-
-    # Install Puppet
-    f20_pup_tb.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    f20_pup_tb.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_tarball_install.pp"
-    end
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 20
-  config.vm.define "f20_rpm" do |f20_rpm|
-    # Build Vagrant box based on Fedora 20
-    f20_rpm.vm.box = "chef/fedora-20"
-
-    # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    f20_rpm.vm.provision "file", source: "./repo_configs/odl_f20.repo",
-                                   destination: "/tmp/odl_f20.repo"
-    f20_rpm.vm.provision "shell", inline: "mv /tmp/odl_f20.repo /etc/yum.repos.d/opendaylight.repo"
-
-    # Install ODL using the Yum repo config added above
-    f20_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f20_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  #
   # Fedora 21 boxes
   #
 
