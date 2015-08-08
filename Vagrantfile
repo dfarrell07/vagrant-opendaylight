@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via Puppet RPM method on CentOS 7
   config.vm.define "cent7_pup_rpm" do |cent7_pup_rpm|
     # Build Vagrant box based on CentOS 7
-    cent7_pup_rpm.vm.box = "chef/centos-7.0"
+    cent7_pup_rpm.vm.box = "boxcutter/centos71"
 
     # Add EPEL repo for access to Puppet et al
     cent7_pup_rpm.vm.provision "shell", inline: "yum install -y epel-release"
@@ -43,7 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via its Ansible role on CentOS 7
   config.vm.define "cent7_ansible" do |cent7_ansible|
     # Build Vagrant box based on CentOS 7
-    cent7_ansible.vm.box = "chef/centos-7.0"
+    cent7_ansible.vm.box = "boxcutter/centos71"
 
     # Install ODL using the Ansible provisioner
     cent7_ansible.vm.provision "ansible" do |ansible|
@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via Puppet tarball method on CentOS 7
   config.vm.define "cent7_pup_tb" do |cent7_pup_tb|
     # Build Vagrant box based on CentOS 7
-    cent7_pup_tb.vm.box = "chef/centos-7.0"
+    cent7_pup_tb.vm.box = "boxcutter/centos71"
 
     # Add EPEL repo for access to Puppet et al
     cent7_pup_tb.vm.provision "shell", inline: "yum install -y epel-release"
@@ -73,10 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL directly from an RPM on CentOS 7
   config.vm.define "cent7_rpm" do |cent7_rpm|
     # Build Vagrant box based on CentOS 7
-    cent7_rpm.vm.box = "chef/centos-7.0"
-
-    # Install EPEL repos for access to sshpass (used by scripts/connect.sh)
-    cent7_rpm.vm.provision "shell", inline: "yum install -y epel-release"
+    cent7_rpm.vm.box = "boxcutter/centos71"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # We have to do this in two steps, a non-privliated SCP and
@@ -100,7 +97,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via Puppet RPM method on Fedora 21
   config.vm.define "f21_pup_rpm" do |f21_pup_rpm|
     # Build Vagrant box based on Fedora 21
-    f21_pup_rpm.vm.box = "chef/fedora-21"
+    f21_pup_rpm.vm.box = "boxcutter/fedora21"
 
     # Install Puppet
     f21_pup_rpm.vm.provision "shell", inline: "yum install -y puppet"
@@ -115,7 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via Puppet tarball method on Fedora 21
   config.vm.define "f21_pup_tb" do |f21_pup_tb|
     # Build Vagrant box based on Fedora 21
-    f21_pup_tb.vm.box = "chef/fedora-21"
+    f21_pup_tb.vm.box = "boxcutter/fedora21"
 
     # Install Puppet
     f21_pup_tb.vm.provision "shell", inline: "yum install -y puppet"
@@ -130,7 +127,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL directly from an RPM on Fedora 21
   config.vm.define "f21_rpm" do |f21_rpm|
     # Build Vagrant box based on Fedora 21
-    f21_rpm.vm.box = "chef/fedora-21"
+    f21_rpm.vm.box = "boxcutter/fedora21"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # We have to do this in two steps, a non-privliated SCP and
