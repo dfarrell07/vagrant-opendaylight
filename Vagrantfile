@@ -143,4 +143,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Start ODL's service via systemd
     f21_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
   end
+
+  #
+  # Fedora 22 boxes
+  #
+
+  # Box that installs ODL directly from an RPM on Fedora 22
+  config.vm.define "f22_rpm" do |f22_rpm|
+    # Build Vagrant box based on Fedora 22
+    f22_rpm.vm.box = "boxcutter/fedora22"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    f22_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
+                                   destination: "/tmp/opendaylight-3-candidate.repo"
+    f22_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+
+    # Install ODL using the Yum repo config added above
+    f22_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    f22_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
 end
