@@ -114,6 +114,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     f21_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
+  # Box that installs ODL via its Ansible role on Fedora 21
+  # NB: This currently fails because it's ahead of upstream support
+  # See: https://github.com/dfarrell07/ansible-opendaylight/issues/17
+  config.vm.define "f21_ansible" do |f21_ansible|
+    # Build Vagrant box based on Fedora 21
+    f21_ansible.vm.box = "boxcutter/fedora21"
+
+    # Install ODL using the Ansible provisioner
+    f21_ansible.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/playbook.yml"
+    end
+  end
+
   # Box that installs ODL via Puppet RPM method on Fedora 21
   config.vm.define "f21_pup_rpm" do |f21_pup_rpm|
     # Build Vagrant box based on Fedora 21
@@ -169,6 +183,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via Puppet RPM method on Fedora 22
+  # NB: This currently fails because it's ahead of upstream support
+  # See: https://github.com/dfarrell07/vagrant-opendaylight/issues/28
   config.vm.define "f22_pup_rpm" do |f22_pup_rpm|
     # Build Vagrant box based on Fedora 22
     f22_pup_rpm.vm.box = "boxcutter/fedora22"
