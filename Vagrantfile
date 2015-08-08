@@ -22,6 +22,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_pup_rpm.vm.box = "dfarrell07/opendaylight"
   end
 
+  # Box that installs ODL directly from an RPM on CentOS 7
+  config.vm.define "cent7_rpm" do |cent7_rpm|
+    # Build Vagrant box based on CentOS 7
+    cent7_rpm.vm.box = "boxcutter/centos71"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    cent7_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
+                                   destination: "/tmp/opendaylight-3-candidate.repo"
+    cent7_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+
+    # Install ODL using the Yum repo config added above
+    cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    cent7_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  # Box that installs ODL via its Ansible role on CentOS 7
+  config.vm.define "cent7_ansible" do |cent7_ansible|
+    # Build Vagrant box based on CentOS 7
+    cent7_ansible.vm.box = "boxcutter/centos71"
+
+    # Install ODL using the Ansible provisioner
+    cent7_ansible.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/playbook.yml"
+    end
+  end
+
   # Box that installs ODL via Puppet RPM method on CentOS 7
   config.vm.define "cent7_pup_rpm" do |cent7_pup_rpm|
     # Build Vagrant box based on CentOS 7
@@ -37,18 +69,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_pup_rpm.vm.provision "puppet" do |puppet|
       puppet.module_path = ["modules"]
       puppet.manifest_file = "odl_install.pp"
-    end
-  end
-
-  # Box that installs ODL via its Ansible role on CentOS 7
-  config.vm.define "cent7_ansible" do |cent7_ansible|
-    # Build Vagrant box based on CentOS 7
-    cent7_ansible.vm.box = "boxcutter/centos71"
-
-    # Install ODL using the Ansible provisioner
-    cent7_ansible.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/playbook.yml"
     end
   end
 
@@ -70,29 +90,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Box that installs ODL directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm" do |cent7_rpm|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm.vm.box = "boxcutter/centos71"
+  #
+  # Fedora 21 boxes
+  #
+
+  # Box that installs ODL directly from an RPM on Fedora 21
+  config.vm.define "f21_rpm" do |f21_rpm|
+    # Build Vagrant box based on Fedora 21
+    f21_rpm.vm.box = "boxcutter/fedora21"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # We have to do this in two steps, a non-privliated SCP and
     #   a privlaged move.
     #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
+    f21_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
                                    destination: "/tmp/opendaylight-3-candidate.repo"
-    cent7_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+    f21_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
 
     # Install ODL using the Yum repo config added above
-    cent7_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
+    f21_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
-    cent7_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
+    f21_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
   end
-
-  #
-  # Fedora 21 boxes
-  #
 
   # Box that installs ODL via Puppet RPM method on Fedora 21
   config.vm.define "f21_pup_rpm" do |f21_pup_rpm|
@@ -122,26 +142,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.module_path = ["modules"]
       puppet.manifest_file = "odl_tarball_install.pp"
     end
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 21
-  config.vm.define "f21_rpm" do |f21_rpm|
-    # Build Vagrant box based on Fedora 21
-    f21_rpm.vm.box = "boxcutter/fedora21"
-
-    # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    f21_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
-                                   destination: "/tmp/opendaylight-3-candidate.repo"
-    f21_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
-
-    # Install ODL using the Yum repo config added above
-    f21_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f21_rpm.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
   #
