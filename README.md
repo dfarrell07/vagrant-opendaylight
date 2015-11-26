@@ -117,6 +117,7 @@ the `puppet` and `librarian-puppet` gems. We use Bundler to make gem
 management trivial.
 
 ```ShellSession
+[~/vagrant-opendaylight]$ sudo dnf install -y rubygems
 [~/vagrant-opendaylight]$ gem install bundler
 [~/vagrant-opendaylight]$ bundle install
 ```
