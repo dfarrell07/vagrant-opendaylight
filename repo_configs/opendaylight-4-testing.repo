@@ -1,0 +1,5 @@
+[opendaylight-4-testing]
+name=CentOS CBS OpenDaylight Beryllium testing repository
+baseurl=http://cbs.centos.org/repos/nfv7-opendaylight-4-testing/$basearch/os/
+enabled=1
+gpgcheck=0
