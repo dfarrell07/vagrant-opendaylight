@@ -7,15 +7,18 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure VM RAM and CPU. Change this to meet your needs.
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
-    v.cpus = 1
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.memory = 1024
+    virtualbox.cpus = 1
   end
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory = 1024
     libvirt.cpus = 1
   end
+
+  # NFS is fragile, disable it and use rsync
+  config.nfs.functional = false
 
   #
   # CentOS 7 boxes
@@ -48,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_rpm_he.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
- # Box that installs ODL Lithium directly from an RPM on CentOS 7
+  # Box that installs ODL Lithium directly from an RPM on CentOS 7
   config.vm.define "cent7_rpm_li" do |cent7_rpm_li|
     # Build Vagrant box based on CentOS 7
     cent7_rpm_li.vm.box = "centos/7"
