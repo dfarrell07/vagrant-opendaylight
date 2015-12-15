@@ -12,6 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 1
   end
 
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory = 1024
+    libvirt.cpus = 1
+  end
+
   #
   # CentOS 7 boxes
   #
