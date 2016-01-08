@@ -202,7 +202,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL directly from an RPM on Fedora 22
   config.vm.define "f22_rpm" do |f22_rpm|
     # Build Vagrant box based on Fedora 22
-    f22_rpm.vm.box = "boxcutter/fedora22"
+    f22_rpm.vm.box = "fedora/22-cloud-base"
+    f22_rpm.vm.box_url = "https://dl.fedoraproject.org/pub/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-libvirt.box"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
@@ -220,7 +221,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # See: https://github.com/dfarrell07/vagrant-opendaylight/issues/28
   config.vm.define "f22_pup_rpm" do |f22_pup_rpm|
     # Build Vagrant box based on Fedora 22
-    f22_pup_rpm.vm.box = "boxcutter/fedora22"
+    f22_pup_rpm.vm.box = "fedora/22-cloud-base"
+    f22_pup_rpm.vm.box_url = "https://dl.fedoraproject.org/pub/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-libvirt.box"
 
     # Install Puppet
     f22_pup_rpm.vm.provision "shell", inline: "yum install -y puppet"
@@ -231,6 +233,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "odl_install.pp"
     end
   end
+
+  #
+  # Fedora 23 boxes
+  #
 
   # Box that installs ODL via Puppet RPM method on Fedora 23 Cloud
   config.vm.define "f23_pup_rpm" do |f23_pup_rpm|
