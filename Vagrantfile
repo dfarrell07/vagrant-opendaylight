@@ -57,12 +57,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_rpm_li.vm.box = "centos/7"
 
     # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm_li.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
-                                   destination: "/tmp/opendaylight-3-candidate.repo"
-    cent7_rpm_li.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    cent7_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
 
     # Install ODL using the Yum repo config added above
     cent7_rpm_li.vm.provision "shell", inline: "yum install -y opendaylight"
@@ -77,12 +73,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_rpm_be.vm.box = "centos/7"
 
     # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm_be.vm.provision "file", source: "./repo_configs/opendaylight-4-testing.repo",
-                                   destination: "/tmp/opendaylight-4-testing.repo"
-    cent7_rpm_be.vm.provision "shell", inline: "mv /tmp/opendaylight-4-testing.repo /etc/yum.repos.d/opendaylight-4-testing.repo"
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    cent7_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
 
     # Install ODL using the Yum repo config added above
     cent7_rpm_be.vm.provision "shell", inline: "yum install -y opendaylight"
