@@ -141,12 +141,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     f21_rpm.vm.box = "boxcutter/fedora21"
 
     # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    f21_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
-                                   destination: "/tmp/opendaylight-3-candidate.repo"
-    f21_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    f21_rpm.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
 
     # Install ODL using the Yum repo config added above
     f21_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
@@ -209,12 +205,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     f22_rpm.vm.box = "boxcutter/fedora22"
 
     # Add ODL Yum repo config to correct location in box filesystem
-    # We have to do this in two steps, a non-privliated SCP and
-    #   a privlaged move.
-    #   See: https://github.com/mitchellh/vagrant/issues/4032
-    f22_rpm.vm.provision "file", source: "./repo_configs/opendaylight-3-candidate.repo",
-                                   destination: "/tmp/opendaylight-3-candidate.repo"
-    f22_rpm.vm.provision "shell", inline: "mv /tmp/opendaylight-3-candidate.repo /etc/yum.repos.d/opendaylight-3-candidate.repo"
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    f22_rpm.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
 
     # Install ODL using the Yum repo config added above
     f22_rpm.vm.provision "shell", inline: "yum install -y opendaylight"
