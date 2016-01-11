@@ -175,12 +175,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
 
   # Box that installs ODL via Puppet RPM method on Fedora 23 Cloud
+  config.vm.define "f23_rpm_li" do |f23_rpm_li|
+    # Build Vagrant box based on Fedora 23 Cloud
+    f23_rpm_li.vm.box = "fedora/23-cloud-base"
+
+    # Install Puppet
+    f23_rpm_li.vm.provision "shell", inline: "dnf install -y puppet"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    f23_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
+
+    # Install ODL using the Yum repo config added above
+    f23_rpm_li.vm.provision "shell", inline: "dnf install -y opendaylight"
+
+    # Start ODL's service via systemd
+    f23_rpm_li.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  # Box that installs ODL via Puppet RPM method on Fedora 23 Cloud
   config.vm.define "f23_pup_rpm" do |f23_pup_rpm|
     # Build Vagrant box based on Fedora 23 Cloud
     f23_pup_rpm.vm.box = "fedora/23-cloud-base"
 
     # Install Puppet
-    f23_pup_rpm.vm.provision "shell", inline: "yum install -y puppet"
+    f23_pup_rpm.vm.provision "shell", inline: "dnf install -y puppet"
 
     # Install OpenDaylight using its Puppet module
     f23_pup_rpm.vm.provision "puppet" do |puppet|
