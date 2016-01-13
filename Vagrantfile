@@ -191,6 +191,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL directly from an RPM on Fedora 23
+  config.vm.define "f23_rpm_li_sr1" do |f23_rpm_li_sr1|
+    # Build Vagrant box based on Fedora 23
+    f23_rpm_li_sr1.vm.box = "fedora/23-cloud-base"
+
+    # Add ODL Yum repo config to correct location in box filesystem
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    # TODO: Get this repo config file hosted upstream
+    #f23_rpm_li_sr1.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-31-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-31-release.repo;hb=refs/heads/master\""
+    # TODO: Remove this method once repo file is upstream
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    f23_rpm_li_sr1.vm.provision "file", source: "./repo_configs/opendaylight-31-release.repo",
+                                   destination: "/tmp/opendaylight-31-release.repo"
+    f23_rpm_li_sr1.vm.provision "shell", inline: "mv /tmp/opendaylight-31-release.repo /etc/yum.repos.d/opendaylight-31-release.repo"
+
+    # Install ODL using the Yum repo config added above
+    f23_rpm_li_sr1.vm.provision "shell", inline: "dnf install -y opendaylight"
+
+    # Start ODL's service via systemd
+    f23_rpm_li_sr1.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  # Box that installs ODL directly from an RPM on Fedora 23
   config.vm.define "f23_rpm_be" do |f23_rpm_be|
     # Build Vagrant box based on Fedora 23
     f23_rpm_be.vm.box = "fedora/23-cloud-base"
