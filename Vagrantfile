@@ -233,7 +233,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that installs ODL via its Ansible role on Fedora 23
   config.vm.define "f23_ansible" do |f23_ansible|
     # Build Vagrant box based on Fedora 23
-    f23_pup_rpm.vm.box = "fedora/23-cloud-base"
+    f23_ansible.vm.box = "fedora/23-cloud-base"
 
     # Install ODL using the Ansible provisioner
     f23_ansible.vm.provision "ansible" do |ansible|
