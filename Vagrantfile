@@ -32,23 +32,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL Helium directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm_he" do |cent7_rpm_he|
+  config.vm.define "cent7_rpm_he_sr4" do |cent7_rpm_he_sr4|
     # Build Vagrant box based on CentOS 7
-    cent7_rpm_he.vm.box = "centos/7"
+    cent7_rpm_he_sr4.vm.box = "centos/7"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # We have to do this in two steps, a non-privliated SCP and
     #   a privlaged move.
     #   See: https://github.com/mitchellh/vagrant/issues/4032
-    cent7_rpm_he.vm.provision "file", source: "./repo_configs/opendaylight-2-candidate.repo",
-                                   destination: "/tmp/opendaylight-2-candidate.repo"
-    cent7_rpm_he.vm.provision "shell", inline: "mv /tmp/opendaylight-2-candidate.repo /etc/yum.repos.d/opendaylight-2-candidate.repo"
+    cent7_rpm_he_sr4.vm.provision "file", source: "./repo_configs/opendaylight-24-release.repo",
+                                   destination: "/tmp/opendaylight-24-release.repo"
+    cent7_rpm_he_sr4.vm.provision "shell", inline: "mv /tmp/opendaylight-24-release.repo /etc/yum.repos.d/opendaylight-24-release.repo"
 
     # Install ODL using the Yum repo config added above
-    cent7_rpm_he.vm.provision "shell", inline: "yum install -y opendaylight"
+    cent7_rpm_he_sr4.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
-    cent7_rpm_he.vm.provision "shell", inline: "systemctl start opendaylight"
+    cent7_rpm_he_sr4.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
   # Box that installs ODL Lithium directly from an RPM on CentOS 7
