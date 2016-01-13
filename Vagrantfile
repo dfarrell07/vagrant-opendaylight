@@ -52,19 +52,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL Lithium directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm_li" do |cent7_rpm_li|
+  config.vm.define "cent7_rpm_li_sr2" do |cent7_rpm_li_sr2|
     # Build Vagrant box based on CentOS 7
-    cent7_rpm_li.vm.box = "centos/7"
+    cent7_rpm_li_sr2.vm.box = "centos/7"
 
     # Add ODL Yum repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
+    # TODO: Get this repo config file hosted upstream
+    #cent7_rpm_li_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-32-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-32-release.repo;hb=refs/heads/master\""
+    # TODO: Remove this method once repo file is upstream
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    cent7_rpm_li_sr2.vm.provision "file", source: "./repo_configs/opendaylight-32-release.repo",
+                                   destination: "/tmp/opendaylight-32-release.repo"
+    cent7_rpm_li_sr2.vm.provision "shell", inline: "mv /tmp/opendaylight-32-release.repo /etc/yum.repos.d/opendaylight-32-release.repo"
 
     # Install ODL using the Yum repo config added above
-    cent7_rpm_li.vm.provision "shell", inline: "yum install -y opendaylight"
+    cent7_rpm_li_sr2.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
-    cent7_rpm_li.vm.provision "shell", inline: "systemctl start opendaylight"
+    cent7_rpm_li_sr2.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
   # Box that installs an ODL Beryllium RPM on CentOS 7
