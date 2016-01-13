@@ -181,7 +181,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Add ODL Yum repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
+    # TODO: Get this repo config file hosted upstream
+    #f23_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-30-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-30-release.repo;hb=refs/heads/master\""
+    # TODO: Remove this method once repo file is upstream
+    # We have to do this in two steps, a non-privliated SCP and
+    #   a privlaged move.
+    #   See: https://github.com/mitchellh/vagrant/issues/4032
+    f23_rpm_li.vm.provision "file", source: "./repo_configs/opendaylight-30-release.repo",
+                                   destination: "/tmp/opendaylight-30-release.repo"
+    f23_rpm_li.vm.provision "shell", inline: "mv /tmp/opendaylight-30-release.repo /etc/yum.repos.d/opendaylight-30-release.repo"
 
     # Install ODL using the Yum repo config added above
     f23_rpm_li.vm.provision "shell", inline: "dnf install -y opendaylight"

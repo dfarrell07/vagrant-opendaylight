@@ -1,0 +1,5 @@
+[opendaylight-30-release]
+name=CentOS CBS OpenDaylight Lithium repository
+baseurl=http://cbs.centos.org/repos/nfv7-opendaylight-30-release/$basearch/os/
+enabled=1
+gpgcheck=0
