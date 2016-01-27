@@ -92,6 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via its Ansible role on CentOS 7
+  # This uses the default repo-based RPM install method
   config.vm.define "cent7_ansible" do |cent7_ansible|
     # Build Vagrant box based on CentOS 7
     cent7_ansible.vm.box = "centos/7"
@@ -99,7 +100,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install ODL using the Ansible provisioner
     cent7_ansible.vm.provision "ansible" do |ansible|
       # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/playbook.yml"
+      ansible.playbook = "provisioning/all_defaults_playbook.yml"
+    end
+  end
+
+  # Box that installs ODL via Ansible on CentOS 7 via URL to RPM directly
+  config.vm.define "cent7_ansible_path" do |cent7_ansible_path|
+    # Build Vagrant box based on CentOS 7
+    cent7_ansible_path.vm.box = "centos/7"
+
+    # Install ODL using the Ansible provisioner
+    cent7_ansible_path.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/rpm_path_install_playbook.yml"
     end
   end
 
@@ -161,6 +174,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via its Ansible role on Fedora 22
+  # This uses the default repo-based RPM install method
   # NB: This currently fails because the Ansible role expects yum vs dnf
   # See: https://github.com/dfarrell07/ansible-opendaylight/issues/19
   config.vm.define "f22_ansible" do |f22_ansible|
@@ -171,7 +185,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install ODL using the Ansible provisioner
     f22_ansible.vm.provision "ansible" do |ansible|
       # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/playbook.yml"
+      ansible.playbook = "provisioning/all_defaults_playbook.yml"
     end
   end
 
@@ -310,6 +324,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via its Ansible role on Fedora 23
+  # This uses the default repo-based RPM install method
   # NB: This currently fails because the Ansible role expects yum vs dnf
   # See: https://github.com/dfarrell07/ansible-opendaylight/issues/19
   config.vm.define "f23_ansible" do |f23_ansible|
@@ -319,7 +334,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install ODL using the Ansible provisioner
     f23_ansible.vm.provision "ansible" do |ansible|
       # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/playbook.yml"
+      ansible.playbook = "provisioning/all_defaults_playbook.yml"
     end
   end
 
