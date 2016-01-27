@@ -160,6 +160,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     f22_rpm_li.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
+  # Box that installs ODL via its Ansible role on Fedora 22
+  # NB: This currently fails because the Ansible role expects yum vs dnf
+  # See: https://github.com/dfarrell07/ansible-opendaylight/issues/19
+  config.vm.define "f22_ansible" do |f22_ansible|
+    # Build Vagrant box based on Fedora 22
+    f22_ansible.vm.box = "fedora/22-cloud-base"
+    f22_ansible.vm.box_url = "https://dl.fedoraproject.org/pub/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-libvirt.box"
+
+    # Install ODL using the Ansible provisioner
+    f22_ansible.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/playbook.yml"
+    end
+  end
+
   # Box that installs ODL via Puppet RPM method on Fedora 22
   # NB: This currently fails because it's ahead of upstream support
   # See: https://github.com/dfarrell07/vagrant-opendaylight/issues/28
@@ -295,6 +310,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via its Ansible role on Fedora 23
+  # NB: This currently fails because the Ansible role expects yum vs dnf
+  # See: https://github.com/dfarrell07/ansible-opendaylight/issues/19
   config.vm.define "f23_ansible" do |f23_ansible|
     # Build Vagrant box based on Fedora 23
     f23_ansible.vm.box = "fedora/23-cloud-base"
