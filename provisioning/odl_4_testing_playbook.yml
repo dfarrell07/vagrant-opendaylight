@@ -1,0 +1,14 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - role: opendaylight
+      rpm_repo_file: "opendaylight-4-testing.repo"
+      rpm_repo_url: "https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master"
+      default_feature_repos:
+        - 'mvn:org.apache.karaf.features/standard/3.0.3/xml/features'
+        - 'mvn:org.apache.karaf.features/enterprise/3.0.3/xml/features'
+        - 'mvn:org.ops4j.pax.web/pax-web-features/3.1.4/xml/features'
+        - 'mvn:org.apache.karaf.features/spring/3.0.3/xml/features'
+        - 'mvn:org.opendaylight.integration/features-integration-index/0.4.0-beryllium-daily-v201601200134/xml/features'
+

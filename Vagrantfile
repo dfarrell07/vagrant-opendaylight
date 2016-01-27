@@ -104,6 +104,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL Be ERP via its Ansible role on CentOS 7
+  # This uses the default repo-based RPM install method
+  config.vm.define "cent7_ansible_be" do |cent7_ansible_be|
+    # Build Vagrant box based on CentOS 7
+    cent7_ansible_be.vm.box = "centos/7"
+
+    # Install ODL using the Ansible provisioner
+    cent7_ansible_be.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/odl_4_testing_playbook.yml"
+    end
+  end
+
   # Box that installs ODL via Ansible on CentOS 7 via URL to RPM directly
   config.vm.define "cent7_ansible_path" do |cent7_ansible_path|
     # Build Vagrant box based on CentOS 7
