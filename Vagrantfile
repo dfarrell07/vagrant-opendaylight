@@ -147,6 +147,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL via Puppet RPM method on CentOS 7
+  config.vm.define "cent7_pup_custom_logs" do |cent7_pup_custom_logs|
+    # Build Vagrant box based on CentOS 7
+    cent7_pup_custom_logs.vm.box = "centos/7"
+
+    # Add EPEL repo for access to Puppet et al
+    cent7_pup_custom_logs.vm.provision "shell", inline: "yum install -y epel-release"
+
+    # Install Puppet
+    cent7_pup_custom_logs.vm.provision "shell", inline: "yum install -y puppet"
+
+    # Install OpenDaylight using its Puppet module
+    cent7_pup_custom_logs.vm.provision "puppet" do |puppet|
+      puppet.module_path = ["modules"]
+      puppet.manifest_file = "custom_loggers.pp"
+    end
+  end
+
   # Box that installs ODL via Puppet tarball method on CentOS 7
   config.vm.define "cent7_pup_tb" do |cent7_pup_tb|
     # Build Vagrant box based on CentOS 7
