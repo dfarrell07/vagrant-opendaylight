@@ -36,11 +36,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_rpm_he_sr4.vm.box = "centos/7"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     cent7_rpm_he_sr4.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-24-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-24-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     cent7_rpm_he_sr4.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -52,11 +52,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_rpm_li_sr2.vm.box = "centos/7"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     cent7_rpm_li_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-32-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-32-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     cent7_rpm_li_sr2.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -68,11 +68,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_rpm_li_sr3.vm.box = "centos/7"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     cent7_rpm_li_sr3.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-33-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-33-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     cent7_rpm_li_sr3.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -84,11 +84,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on CentOS 7
     cent7_rpm_be.vm.box = "centos/7"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     cent7_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     cent7_rpm_be.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -215,11 +215,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     f22_rpm_li.vm.box = "fedora/22-cloud-base"
     f22_rpm_li.vm.box_url = "https://dl.fedoraproject.org/pub/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-libvirt.box"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f22_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-3-candidate.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-3-candidate.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f22_rpm_li.vm.provision "shell", inline: "yum install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -269,11 +269,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on Fedora 23
     f23_rpm_li.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f23_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-30-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-30-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f23_rpm_li.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -285,11 +285,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on Fedora 23
     f23_rpm_li_sr1.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f23_rpm_li_sr1.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-31-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-31-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f23_rpm_li_sr1.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -301,11 +301,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on Fedora 23
     f23_rpm_li_sr2.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f23_rpm_li_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-32-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-32-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f23_rpm_li_sr2.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -317,10 +317,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on Fedora 23
     f23_rpm_li_sr3.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f23_rpm_li_sr3.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-33-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-33-release.repo;hb=refs/heads/master\""
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f23_rpm_li_sr3.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
@@ -332,11 +332,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Build Vagrant box based on Fedora 23
     f23_rpm_be.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL Yum repo config to correct location in box filesystem
+    # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
     f23_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
 
-    # Install ODL using the Yum repo config added above
+    # Install ODL using the RPM repo config added above
     f23_rpm_be.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
