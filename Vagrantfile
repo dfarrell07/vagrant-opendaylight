@@ -334,13 +334,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Add ODL RPM repo config to correct location in box filesystem
     # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
+    f23_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-40-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-40-release.repo;hb=refs/heads/master\""
 
     # Install ODL using the RPM repo config added above
+    # NB: This will currently fail because ODL Be hasn't been released
     f23_rpm_be.vm.provision "shell", inline: "dnf install -y opendaylight"
 
     # Start ODL's service via systemd
     f23_rpm_be.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
+  # Box that installs ODL directly from an RPM on Fedora 23
+  config.vm.define "f23_rpm_be_latest" do |f23_rpm_be_latest|
+    # Build Vagrant box based on Fedora 23
+    f23_rpm_be_latest.vm.box = "fedora/23-cloud-base"
+
+    # Add ODL RPM repo config to correct location in box filesystem
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    f23_rpm_be_latest.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
+
+    # Install ODL using the RPM repo config added above
+    f23_rpm_be_latest.vm.provision "shell", inline: "dnf install -y opendaylight"
+
+    # Start ODL's service via systemd
+    f23_rpm_be_latest.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
   # Box that installs ODL via its Ansible role on Fedora 23
