@@ -259,8 +259,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Box that installs ODL via Puppet RPM method on Fedora 22
-  # NB: This currently fails because it's ahead of upstream support
-  # See: https://github.com/dfarrell07/vagrant-opendaylight/issues/28
   config.vm.define "f22_pup_rpm" do |f22_pup_rpm|
     # Build Vagrant box based on Fedora 22
     f22_pup_rpm.vm.box = "fedora/22-cloud-base"
@@ -272,7 +270,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install OpenDaylight using its Puppet module
     f22_pup_rpm.vm.provision "puppet" do |puppet|
       puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_install.pp"
+      puppet.environment_path = "environments"
+      puppet.environment = "main"
     end
   end
 
