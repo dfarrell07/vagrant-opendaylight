@@ -27,8 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Box that uses OpenDaylight's Vagrant base box
   config.vm.define "cent7" do |cent7|
     # Simply use OpenDaylight's Vagrant base box
-    # NB: Upstream ODL plans to eventually host their own boxes (doesn't atm)
-    cent7.vm.box = "dfarrell07/opendaylight"
+    cent7.vm.box = "opendaylight/odl"
   end
 
   # Box that installs ODL Helium directly from an RPM on CentOS 7
