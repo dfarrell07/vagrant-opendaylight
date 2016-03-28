@@ -95,6 +95,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_rpm_be.vm.provision "shell", inline: "systemctl start opendaylight"
   end
 
+  # Box that installs an ODL Beryllium SR1 RPM on CentOS 7
+  config.vm.define "cent7_rpm_be_sr1" do |cent7_rpm_be_sr1|
+    # Build Vagrant box based on CentOS 7
+    cent7_rpm_be_sr1.vm.box = "centos/7"
+
+    # Add ODL RPM repo config to correct location in box filesystem
+    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+    cent7_rpm_be_sr1.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-41-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-41-release.repo;hb=refs/heads/master\""
+
+    # Install ODL using the RPM repo config added above
+    cent7_rpm_be_sr1.vm.provision "shell", inline: "yum install -y opendaylight"
+
+    # Start ODL's service via systemd
+    cent7_rpm_be_sr1.vm.provision "shell", inline: "systemctl start opendaylight"
+  end
+
   # Box that installs an ODL Beryllium RPM on CentOS 7
   config.vm.define "cent7_rpm_be_latest" do |cent7_rpm_be_latest|
     # Build Vagrant box based on CentOS 7
