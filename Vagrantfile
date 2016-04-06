@@ -30,6 +30,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cent7_li_sr4.vm.box_version = "= 3.4.0"
   end
 
+  # Box that uses OpenDaylight's Beryllium Vagrant base box
+  config.vm.define "cent7_be" do |cent7_be|
+    cent7_be.vm.box = "opendaylight/odl"
+    cent7_be.vm.box_version = "= 4.0.0"
+  end
+
   # Box that installs ODL Helium directly from an RPM on CentOS 7
   config.vm.define "cent7_rpm_he_sr4" do |cent7_rpm_he_sr4|
     # Build Vagrant box based on CentOS 7
