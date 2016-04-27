@@ -404,11 +404,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Box that installs ODL via its Ansible role on Fedora 23
   # This uses the default repo-based RPM install method
-  # NB: This currently fails because the Ansible role expects yum vs dnf
-  # See: https://github.com/dfarrell07/ansible-opendaylight/issues/19
   config.vm.define "f23_ansible" do |f23_ansible|
     # Build Vagrant box based on Fedora 23
     f23_ansible.vm.box = "fedora/23-cloud-base"
+
+    # Install Python and py-dnf lib, required by ansible-playbook
+    # See: https://github.com/ansible/ansible/issues/14427
+    f23_ansible.vm.provision "shell", inline: "dnf install -y python python-dnf"
 
     # Install ODL using the Ansible provisioner
     f23_ansible.vm.provision "ansible" do |ansible|
