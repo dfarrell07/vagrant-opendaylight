@@ -321,6 +321,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   # Fedora 23 boxes
   #
+  # NB: Recent versions of OpenSSH, shipped with Fedora, don't support ssh-dss
+  # as an auth protocol. ODL seems offers ssh-dss by default it seems. To SSH
+  # to the Karaf shell, tell SSH to accept ssh-dss.
+  #   ssh -p 8101 -oHostKeyAlgorithms=+ssh-dss karaf@localhost
+  #
 
   # Box that installs ODL directly from an RPM on Fedora 23
   config.vm.define "f23_rpm_li" do |f23_rpm_li|
