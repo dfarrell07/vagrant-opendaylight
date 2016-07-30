@@ -23,7 +23,7 @@ echo "Will repeatedly attempt connecting to Karaf shell until it's ready"
 # Loop until exit status 0 (success) given by Karaf shell
 # Exit status 255 means Karaf shell isn't open for SSH connections yet
 # Exit status 1 means `dropAllPacketsRpc on` isn't runnable yet
-until sshpass -p karaf ssh -p $KARAF_SHELL_PORT -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PreferredAuthentications=password karaf@localhost
+until sshpass -p karaf ssh -p $KARAF_SHELL_PORT -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o HostkeyAlgorithms=ssh-dss karaf@localhost
 do
     echo "Karaf shell isn't ready yet, sleeping 5 seconds..."
     sleep 5
