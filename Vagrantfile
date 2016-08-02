@@ -328,7 +328,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Fedora 23 boxes
   #
   # NB: Recent versions of OpenSSH, shipped with Fedora, don't support ssh-dss
-  # as an auth protocol. ODL seems offers ssh-dss by default it seems. To SSH
+  # as an auth protocol. ODL offers ssh-dss by default it seems. To SSH
   # to the Karaf shell, tell SSH to accept ssh-dss.
   #   ssh -p 8101 -oHostKeyAlgorithms=+ssh-dss karaf@localhost
   #
