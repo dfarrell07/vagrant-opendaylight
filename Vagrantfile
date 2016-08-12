@@ -6,12 +6,13 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  # Configure VM RAM and CPU. Change this to meet your needs.
+  # Configure VM RAM and CPU for VirtualBox. Change this to meet your needs.
   config.vm.provider :virtualbox do |virtualbox|
     virtualbox.memory = 1024
     virtualbox.cpus = 1
   end
 
+  # Configure VM RAM and CPU for LibVirt. Change this to meet your needs.
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory = 1024
     libvirt.cpus = 1
