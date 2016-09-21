@@ -104,14 +104,14 @@ After you install the `ansible-galaxy` tool, point it at the project's
 `requirements.yml` file to install ODL's role.
 
 ```ShellSession
-[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml
+[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml -p provisioning/roles/
 ```
 
 To update the Ansible role to the latest from the project's `master` branch,
 add a `--force` flag.
 
 ```ShellSession
-[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml --force
+[~/vagrant-opendaylight]$ ansible-galaxy install -r requirements.yml -p provisioning/roles/ --force
 ```
 
 ### Puppet Deployments

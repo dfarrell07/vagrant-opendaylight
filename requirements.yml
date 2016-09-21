@@ -4,4 +4,3 @@
 
 - name: opendaylight
   src: https://github.com/dfarrell07/ansible-opendaylight
-  path: provisioning/roles/
