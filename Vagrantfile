@@ -483,17 +483,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Debian 8 boxes
   #
 
-  # Box that installs ODL via its Ansible role on Debian 8
-  # This uses the default repo-based deb install method
-  config.vm.define "debian8_ansible" do |debian8_ansible|
+  # Box that installs ODL via its Ansible role on Debian 8 using debian repo
+  config.vm.define "debian8_ansible_repo" do |debian8_ansible_repo|
     # Build Vagrant box based on Debian 8
-    debian8_ansible.vm.box = "debian/jessie64"
-    debian8_ansible.vm.box_version = "=8.5.2"
+    debian8_ansible_repo.vm.box = "debian/jessie64"
 
     # Install ODL using the Ansible provisioner
-    debian8_ansible.vm.provision "ansible" do |ansible|
+    debian8_ansible_repo.vm.provision "ansible" do |ansible|
       # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/all_defaults_playbook.yml"
+      ansible.playbook = "provisioning/deb_repo_install_playbook.yml"
+    end
+  end
+
+  # Box that installs ODL via its Ansible role on Debian 8 using .deb URL
+  config.vm.define "debian8_ansible_path" do |debian8_ansible_path|
+    # Build Vagrant box based on Debian 8
+    debian8_ansible_path.vm.box = "debian/jessie64"
+
+    # Install ODL using the Ansible provisioner
+    debian8_ansible_path.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/deb_path_install_playbook.yml"
     end
   end
 
@@ -501,17 +511,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Ubuntu boxes
   #
 
-  # Box that installs ODL via its Ansible role on Debian 8
-  # This uses the default repo-based deb install method
-  config.vm.define "ubuntu16_ansible" do |ubuntu16_ansible|
-    # Build Vagrant box based on Debian 8
-    ubuntu16_ansible.vm.box = "ubuntu/xenial64"
-    ubuntu16_ansible.vm.box_version = "=20161130.0.0"
+  # Box that installs ODL via its Ansible role on Ubuntu 16.04 using debian repo
+  config.vm.define "ubuntu16_ansible_repo" do |ubuntu16_ansible_repo|
+    # Build Vagrant box based on Ubuntu 16.04
+    ubuntu16_ansible_repo.vm.box = "ubuntu/xenial64"
+
+    # Install python
+    ubuntu16_ansible_repo.vm.provision "shell", inline: "apt-get install -y python"
 
     # Install ODL using the Ansible provisioner
-    ubuntu16_ansible.vm.provision "ansible" do |ansible|
+    ubuntu16_ansible_repo.vm.provision "ansible" do |ansible|
       # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/all_defaults_playbook.yml"
+      ansible.playbook = "provisioning/deb_repo_install_playbook.yml"
+    end
+  end
+
+  # Box that installs ODL via its Ansible role on Ubuntu 16.04 using .deb URL
+  config.vm.define "ubuntu16_ansible_path" do |ubuntu16_ansible_path|
+    # Build Vagrant box based on Ubuntu 16.04
+    ubuntu16_ansible_path.vm.box = "ubuntu/xenial64"
+
+    # Install python
+    ubuntu16_ansible_path.vm.provision "shell", inline: "apt-get install -y python"
+
+    # Install ODL using the Ansible provisioner
+    ubuntu16_ansible_path.vm.provision "ansible" do |ansible|
+      # Path to Ansible playbook that installs ODL using ODL's Ansible role
+      ansible.playbook = "provisioning/deb_path_install_playbook.yml"
     end
   end
 
