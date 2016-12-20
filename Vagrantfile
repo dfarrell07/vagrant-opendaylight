@@ -25,249 +25,90 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # CentOS 7 boxes
   #
 
-  # Box that uses OpenDaylight's Lithium SR4 Vagrant base box
-  config.vm.define "cent7_li_sr4" do |cent7_li_sr4|
-    cent7_li_sr4.vm.box = "opendaylight/odl"
-    cent7_li_sr4.vm.box_version = "= 3.4.0"
+  # Boxes that uses OpenDaylight's Lithium SR4, Beryllium, Beryllium SR1 & SR2 Vagrant base boxes
+  centOS7_boxes = {
+    "cent7_li_sr4" => "3.4.0",
+    "cent7_be" => "4.0.0",
+    "cent7_be_sr1" => "4.1.0",
+    "cent7_be_sr2" => "4.2.0"
+  }
+  centOS7_boxes.each do |centOS7_box, version|
+    config.vm.define "#{centOS7_box}" do |vbox|
+      vbox.vm.box = "opendaylight/odl"
+      vbox.vm.box_version = "= #{version}"
+    end
   end
 
-  # Box that uses OpenDaylight's Beryllium Vagrant base box
-  config.vm.define "cent7_be" do |cent7_be|
-    cent7_be.vm.box = "opendaylight/odl"
-    cent7_be.vm.box_version = "= 4.0.0"
+  # Box that installs ODL Helium, Lithium, Beryllium, Beryllium SR1 & SR2 directly from an RPM on CentOS 7
+  centOS7_boxes = {
+      "cent7_rpm_he_sr4" => "24",
+      "cent7_rpm_li_sr2" => "32",
+      "cent7_rpm_li_sr3" => "33",
+      "cent7_rpm_be" => "40",
+      "cent7_rpm_be_sr1" => "41",
+      "cent7_rpm_be_sr2" => "42",
+      "cent7_rpm_ve_latest" => "4"
+  }
+  centOS7_boxes.each do |centOS7_box, version|
+    config.vm.define "#{centOS7_box}" do |vbox|
+      # Build Vagrant box based on CentOS 7
+      vbox.vm.box = "centos/7"
+
+      # Add ODL RPM repo config to correct location in box filesystem
+      # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+      vbox.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-#{version}-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-#{version}-release.repo;hb=refs/heads/master\""
+
+      # Install ODL using the RPM repo config added above
+      vbox.vm.provision "shell", inline: "yum install -y opendaylight"
+
+      # Start ODL's service via systemd
+      vbox.vm.provision "shell", inline: "systemctl start opendaylight"
+    end
   end
 
-  # Box that uses OpenDaylight's Beryllium SR1 Vagrant base box
-  config.vm.define "cent7_be_sr1" do |cent7_be_sr1|
-    cent7_be_sr1.vm.box = "opendaylight/odl"
-    cent7_be_sr1.vm.box_version = "= 4.1.0"
-  end
-
-  # Box that uses OpenDaylight's Beryllium SR2 Vagrant base box
-  config.vm.define "cent7_be_sr2" do |cent7_be_sr2|
-    cent7_be_sr2.vm.box = "opendaylight/odl"
-    cent7_be_sr2.vm.box_version = "= 4.2.0"
-  end
-
-  # Box that installs ODL Helium directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm_he_sr4" do |cent7_rpm_he_sr4|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_he_sr4.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_he_sr4.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-24-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-24-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_he_sr4.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_he_sr4.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL Lithium directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm_li_sr2" do |cent7_rpm_li_sr2|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_li_sr2.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_li_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-32-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-32-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_li_sr2.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_li_sr2.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL Lithium directly from an RPM on CentOS 7
-  config.vm.define "cent7_rpm_li_sr3" do |cent7_rpm_li_sr3|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_li_sr3.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_li_sr3.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-33-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-33-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_li_sr3.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_li_sr3.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs an ODL Beryllium RPM on CentOS 7
-  config.vm.define "cent7_rpm_be" do |cent7_rpm_be|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_be.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-40-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-40-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_be.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_be.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs an ODL Beryllium SR1 RPM on CentOS 7
-  config.vm.define "cent7_rpm_be_sr1" do |cent7_rpm_be_sr1|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_be_sr1.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_be_sr1.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-41-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-41-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_be_sr1.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_be_sr1.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs an ODL Beryllium SR2 RPM on CentOS 7
-  config.vm.define "cent7_rpm_be_sr2" do |cent7_rpm_be_sr2|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_be_sr2.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_be_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-42-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-42-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_be_sr2.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_be_sr2.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs an ODL Beryllium RPM on CentOS 7
-  config.vm.define "cent7_rpm_be_latest" do |cent7_rpm_be_latest|
-    # Build Vagrant box based on CentOS 7
-    cent7_rpm_be_latest.vm.box = "centos/7"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    cent7_rpm_be_latest.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    cent7_rpm_be_latest.vm.provision "shell", inline: "yum install -y opendaylight"
-
-    # Start ODL's service via systemd
-    cent7_rpm_be_latest.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL via its Ansible role on CentOS 7
+  # Box that installs ODL, ODL be ERP via its Ansible role and ODL via URL to RPM directly on CentOS 7
+  centOS7_boxes = {
+    "cent7_ansible" => "all_defaults_playbook.yml",
+    "cent7_ansible_latest" => "odl_4_testing_playbook.yml",
+    "cent7_ansible_path" => "rpm_path_install_playbook"
+  }
+  centOS7_boxes.each do |centOS7_box, playbook|
   # This uses the default repo-based RPM install method
-  config.vm.define "cent7_ansible" do |cent7_ansible|
-    # Build Vagrant box based on CentOS 7
-    cent7_ansible.vm.box = "centos/7"
+    config.vm.define "#{centOS7_box}" do |vbox|
+      # Build Vagrant box based on CentOS 7
+      vbox.vm.box = "centos/7"
 
-    # Install ODL using the Ansible provisioner
-    cent7_ansible.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/all_defaults_playbook.yml"
+      # Install ODL using the Ansible provisioner
+      vbox.vm.provision "ansible" do |ansible|
+        # Path to Ansible playbook that installs ODL using ODL's Ansible role
+        ansible.playbook = "provisioning/#{playbook}"
+      end
     end
   end
 
-  # Box that installs ODL Be ERP via its Ansible role on CentOS 7
-  # This uses the default repo-based RPM install method
-  config.vm.define "cent7_ansible_be_latest" do |cent7_ansible_be_latest|
-    # Build Vagrant box based on CentOS 7
-    cent7_ansible_be_latest.vm.box = "centos/7"
+  # Box that installs ODL via Puppet RPM and tarball method on CentOS 7
+  centOS7_boxes = {
+    "cent7_pup_rpm" => "odl_install.pp",
+    "cent7_pup_custom_logs" => "custom_loggers.pp",
+    "cent7_pup_enable_l3" => "enable_l3.pp",
+    "cent7_pup_tb" => "odl_tarball_install.pp"
+  }
+  centOS7_boxes.each do |centOS7_box, manifest_file|
+    config.vm.define "#{centOS7_box}" do |vbox|
+      # Build Vagrant box based on CentOS 7
+      vbox.vm.box = "centos/7"
 
-    # Install ODL using the Ansible provisioner
-    cent7_ansible_be_latest.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/odl_4_testing_playbook.yml"
-    end
-  end
+      # Add EPEL repo for access to Puppet et al
+      vbox.vm.provision "shell", inline: "yum install -y epel-release"
 
-  # Box that installs ODL via Ansible on CentOS 7 via URL to RPM directly
-  config.vm.define "cent7_ansible_path" do |cent7_ansible_path|
-    # Build Vagrant box based on CentOS 7
-    cent7_ansible_path.vm.box = "centos/7"
+      # Install Puppet
+      vbox.vm.provision "shell", inline: "yum install -y puppet"
 
-    # Install ODL using the Ansible provisioner
-    cent7_ansible_path.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/rpm_path_install_playbook.yml"
-    end
-  end
-
-  # Box that installs ODL via Puppet RPM method on CentOS 7
-  config.vm.define "cent7_pup_rpm" do |cent7_pup_rpm|
-    # Build Vagrant box based on CentOS 7
-    cent7_pup_rpm.vm.box = "centos/7"
-
-    # Add EPEL repo for access to Puppet et al
-    cent7_pup_rpm.vm.provision "shell", inline: "yum install -y epel-release"
-
-    # Install Puppet
-    cent7_pup_rpm.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    cent7_pup_rpm.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_install.pp"
-    end
-  end
-
-  # Box that installs ODL via Puppet RPM method on CentOS 7
-  config.vm.define "cent7_pup_custom_logs" do |cent7_pup_custom_logs|
-    # Build Vagrant box based on CentOS 7
-    cent7_pup_custom_logs.vm.box = "centos/7"
-
-    # Add EPEL repo for access to Puppet et al
-    cent7_pup_custom_logs.vm.provision "shell", inline: "yum install -y epel-release"
-
-    # Install Puppet
-    cent7_pup_custom_logs.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    cent7_pup_custom_logs.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "custom_loggers.pp"
-    end
-  end
-
-  # Box that installs ODL via Puppet RPM method on CentOS 7
-  config.vm.define "cent7_pup_enable_l3" do |cent7_pup_enable_l3|
-    # Build Vagrant box based on CentOS 7
-    cent7_pup_enable_l3.vm.box = "centos/7"
-
-    # Add EPEL repo for access to Puppet et al
-    cent7_pup_enable_l3.vm.provision "shell", inline: "yum install -y epel-release"
-
-    # Install Puppet
-    cent7_pup_enable_l3.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    cent7_pup_enable_l3.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "enable_l3.pp"
-    end
-  end
-
-  # Box that installs ODL via Puppet tarball method on CentOS 7
-  config.vm.define "cent7_pup_tb" do |cent7_pup_tb|
-    # Build Vagrant box based on CentOS 7
-    cent7_pup_tb.vm.box = "centos/7"
-
-    # Add EPEL repo for access to Puppet et al
-    cent7_pup_tb.vm.provision "shell", inline: "yum install -y epel-release"
-
-    # Install Puppet
-    cent7_pup_tb.vm.provision "shell", inline: "yum install -y puppet"
-
-    # Install OpenDaylight using its Puppet module
-    cent7_pup_tb.vm.provision "puppet" do |puppet|
-      puppet.module_path = ["modules"]
-      puppet.manifest_file = "odl_tarball_install.pp"
+      # Install OpenDaylight using its Puppet module
+      vbox.vm.provision "puppet" do |puppet|
+        puppet.module_path = ["modules"]
+        puppet.manifest_file = "#{manifest_file}"
+      end
     end
   end
 
@@ -334,116 +175,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   ssh -p 8101 -oHostKeyAlgorithms=+ssh-dss karaf@localhost
   #
 
+  f23_boxes = {
+    "f23_rpm_li" => "30",
+    "f23_rpm_li_sr1" => "31",
+    "f23_rpm_li_sr2" => "32",
+    "f23_rpm_li_sr3" => "33",
+    "f23_rpm_be" => "40",
+    "f23_rpm_be_rel" => "4",
+    "f23_rpm_be_latest" => "4"
+  }
   # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_li" do |f23_rpm_li|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_li.vm.box = "fedora/23-cloud-base"
+  f23_boxes.each do |f23_box, version|
+    config.vm.define "#{f23_box}" do |vbox|
+      # Build Vagrant box based on Fedora 23
+      vbox.vm.box = "fedora/23-cloud-base"
 
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_li.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-30-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-30-release.repo;hb=refs/heads/master\""
+      # Add ODL RPM repo config to correct location in box filesystem
+      # Repo configs are provided by upstream OpenDaylight Integration/Packaging
+      vbox.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-#{version}-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-#{version}-release.repo;hb=refs/heads/master\""
 
-    # Install ODL using the RPM repo config added above
-    f23_rpm_li.vm.provision "shell", inline: "dnf install -y opendaylight"
+      # Install ODL using the RPM repo config added above
+      vbox.vm.provision "shell", inline: "dnf install -y opendaylight"
 
-    # Start ODL's service via systemd
-    f23_rpm_li.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_li_sr1" do |f23_rpm_li_sr1|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_li_sr1.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_li_sr1.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-31-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-31-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    f23_rpm_li_sr1.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_li_sr1.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_li_sr2" do |f23_rpm_li_sr2|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_li_sr2.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_li_sr2.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-32-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-32-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    f23_rpm_li_sr2.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_li_sr2.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_li_sr3" do |f23_rpm_li_sr3|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_li_sr3.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_li_sr3.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-33-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-33-release.repo;hb=refs/heads/master\""
-    # Install ODL using the RPM repo config added above
-    f23_rpm_li_sr3.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_li_sr3.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_be" do |f23_rpm_be|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_be.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_be.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-40-release.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-40-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    # NB: This will currently fail because ODL Be hasn't been released
-    f23_rpm_be.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_be.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_be_rel" do |f23_rpm_be_rel|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_be_rel.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_be_rel.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-release.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    f23_rpm_be_rel.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_be_rel.vm.provision "shell", inline: "systemctl start opendaylight"
-  end
-
-  # Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_rpm_be_latest" do |f23_rpm_be_latest|
-    # Build Vagrant box based on Fedora 23
-    f23_rpm_be_latest.vm.box = "fedora/23-cloud-base"
-
-    # Add ODL RPM repo config to correct location in box filesystem
-    # Repo configs are provided by upstream OpenDaylight Integration/Packaging
-    f23_rpm_be_latest.vm.provision "shell", inline: "curl --silent -o /etc/yum.repos.d/opendaylight-4-testing.repo \"https://git.opendaylight.org/gerrit/gitweb?p=integration/packaging.git;a=blob_plain;f=rpm/example_repo_configs/opendaylight-4-testing.repo;hb=refs/heads/master\""
-
-    # Install ODL using the RPM repo config added above
-    f23_rpm_be_latest.vm.provision "shell", inline: "dnf install -y opendaylight"
-
-    # Start ODL's service via systemd
-    f23_rpm_be_latest.vm.provision "shell", inline: "systemctl start opendaylight"
+      # Start ODL's service via systemd
+      vbox.vm.provision "shell", inline: "systemctl start opendaylight"
+    end
   end
 
   # Box that installs ODL via its Ansible role on Fedora 23
@@ -483,27 +239,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Debian 8 boxes
   #
 
-  # Box that installs ODL via its Ansible role on Debian 8 using debian repo
-  config.vm.define "debian8_ansible_repo" do |debian8_ansible_repo|
-    # Build Vagrant box based on Debian 8
-    debian8_ansible_repo.vm.box = "debian/jessie64"
+  # Box that installs ODL via its Ansible role on Debian 8 using debian repo and .deb URL
+  ["repo", "path"].each do |method|
+    config.vm.define "debian8_ansible_#{method}" do |debian8_ansible_method|
+      # Build Vagrant box based on Debian 8
+      debian8_ansible_method.vm.box = "debian/jessie64"
 
-    # Install ODL using the Ansible provisioner
-    debian8_ansible_repo.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/deb_repo_install_playbook.yml"
-    end
-  end
-
-  # Box that installs ODL via its Ansible role on Debian 8 using .deb URL
-  config.vm.define "debian8_ansible_path" do |debian8_ansible_path|
-    # Build Vagrant box based on Debian 8
-    debian8_ansible_path.vm.box = "debian/jessie64"
-
-    # Install ODL using the Ansible provisioner
-    debian8_ansible_path.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/deb_path_install_playbook.yml"
+      # Install ODL using the Ansible provisioner
+      debian8_ansible_method.vm.provision "ansible" do |ansible|
+        # Path to Ansible playbook that installs ODL using ODL's Ansible role
+        ansible.playbook = "provisioning/deb_#{method}_install_playbook.yml"
+      end
     end
   end
 
@@ -511,33 +257,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Ubuntu boxes
   #
 
-  # Box that installs ODL via its Ansible role on Ubuntu 16.04 using debian repo
-  config.vm.define "ubuntu16_ansible_repo" do |ubuntu16_ansible_repo|
-    # Build Vagrant box based on Ubuntu 16.04
-    ubuntu16_ansible_repo.vm.box = "ubuntu/xenial64"
+  # Box that installs ODL via its Ansible role on Ubuntu 16.04 using debian repo and .deb URL
+  ["repo", "path"].each do |method|
+    config.vm.define "ubuntu16_ansible_#{method}" do |ubuntu16_ansible_method|
+      # Build Vagrant box based on Ubuntu 16.04
+      ubuntu16_ansible_method.vm.box = "ubuntu/xenial64"
 
-    # Install python
-    ubuntu16_ansible_repo.vm.provision "shell", inline: "apt-get install -y python"
+      # Install python
+      ubuntu16_ansible_method.vm.provision "shell", inline: "apt-get install -y python"
 
-    # Install ODL using the Ansible provisioner
-    ubuntu16_ansible_repo.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/deb_repo_install_playbook.yml"
-    end
-  end
-
-  # Box that installs ODL via its Ansible role on Ubuntu 16.04 using .deb URL
-  config.vm.define "ubuntu16_ansible_path" do |ubuntu16_ansible_path|
-    # Build Vagrant box based on Ubuntu 16.04
-    ubuntu16_ansible_path.vm.box = "ubuntu/xenial64"
-
-    # Install python
-    ubuntu16_ansible_path.vm.provision "shell", inline: "apt-get install -y python"
-
-    # Install ODL using the Ansible provisioner
-    ubuntu16_ansible_path.vm.provision "ansible" do |ansible|
-      # Path to Ansible playbook that installs ODL using ODL's Ansible role
-      ansible.playbook = "provisioning/deb_path_install_playbook.yml"
+      # Install ODL using the Ansible provisioner
+      ubuntu16_ansible_method.vm.provision "ansible" do |ansible|
+        # Path to Ansible playbook that installs ODL using ODL's Ansible role
+        ansible.playbook = "provisioning/deb_#{method}_install_playbook.yml"
+      end
     end
   end
 
