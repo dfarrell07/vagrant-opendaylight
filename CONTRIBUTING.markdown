@@ -6,7 +6,7 @@ We work to make contributing easy. Please let us know if you spot something we c
 1. [Overview](#overview)
 1. [Communication](#communication)
     * [Issues](#issues)
-    * [Gitter](#gitter)
+    * [IRC channel](#irc-channel)
 1. [Patches](#patches)
 
 ## Overview
@@ -37,11 +37,9 @@ The `info:progress` labels may not always be up-to-date, but will be used when a
 
 Issues can be referenced and manipulated from git commit messages. Just referencing the issue's number (`#42`) will link the commit and issue. Issues can also be closed from commit messages with `closes #42` (and [a variety of other key words](https://help.github.com/articles/closing-issues-via-commit-messages/)).
 
-### Gitter
+### IRC channel
 
-We're experimenting with Gitter, a GitHub-driven chat service that works on a per-repo basis.
-
-Feel free to hop in [our room](https://gitter.im/dfarrell07/vagrant-opendaylight) and test it out with us.
+Feel free to join us at **#opendaylight-integration** on `chat.freenode.net`. You can also use web client for Freenode to join us at [webchat](http://webchat.freenode.net/?channels=opendaylight-integration).
 
 ## Patches
 
