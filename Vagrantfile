@@ -274,4 +274,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Box that installs ODL via Puppet deb method on Ubuntu 16.04
+  config.vm.define "ubuntu16_pup_deb" do |ubuntu16_pup_deb|
+    # Build Vagrant box based on Ubuntu 16.04
+    ubuntu16_pup_deb.vm.box = "ubuntu/xenial64"
+
+    # Install Puppet
+    ubuntu16_pup_deb.vm.provision "shell", inline: "apt-get install -y puppet"
+    ubuntu16_pup_deb.vm.provision "shell", inline: "apt-get install -y librarian-puppet"
+    ubuntu16_pup_deb.vm.provision "shell", inline: "puppet module install puppetlabs-apt"
+
+    # Install OpenDaylight using its Puppet module
+    ubuntu16_pup_deb.vm.provision "puppet" do |puppet|
+      puppet.module_path = "modules"
+      puppet.environment_path = "environments"
+      puppet.environment = "main"
+    end
+  end
+
 end
+
